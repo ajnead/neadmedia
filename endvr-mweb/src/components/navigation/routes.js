@@ -13,8 +13,8 @@ const Routes = [
 
     },
     {
-        navName : "Discovery",
-        path : "/discovery",
+        navName : "Discover",
+        path : "/discover",
         component : DiscoveryContainer,
         isShown : true,
         iconName : "icon-discover"

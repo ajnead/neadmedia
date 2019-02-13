@@ -1,9 +1,14 @@
+/*common css vars*/
+:root{
+    --primary-color: #232F3F;
+    --secondary-color: #33adff;
+}
+
+/*html tag overrides*/
 body {
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen","Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",monospace;
@@ -197,10 +202,13 @@ code {
     float: right
 }
 .bg-primary{ 
-    background-color: #232F3F !important; 
+    background-color: var(--primary-color) !important; 
 }
 .text-white{
     color: #fff;
+}
+.text-grey{
+    color: rgba(0, 0, 0, 0.500)
 }
 .font-h6{
     font-size: 14px;
@@ -208,8 +216,14 @@ code {
 .font-h7{
     font-size: 13px;
 }
+.font-weight-600{
+    font-weight: 600;
+}
+.border-0{
+    border: none !important;
+}
 
-/*custom styles*/
+/*the app - header, container, footer*/
 .header{
     width: 100%;
 }
@@ -235,8 +249,13 @@ code {
     z-index: 999;
 }
 .container{
+    margin: 0px;
+    padding: 0px;
     height: calc( 100vh - 90px);
     overflow-y: scroll;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
 }
 .footer{
     height: 50px;
@@ -257,7 +276,7 @@ code {
     color: white !important;
 }
 .footer a:hover,.footer a.active{
-    color: #33adff !important;
+    color: var(--secondary-color) !important;
 }
 
 /*icons*/
@@ -290,4 +309,49 @@ code {
 }
 .icon-assistant:hover, .icon-assistant:active, .icon-assistant.active{
     background-image: url('data:image/svg+xml;charset=utf8,<svg fill="#33adff" stroke="#33adff" stroke-width="2" version="1.1" viewBox="0 0 48 48" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path clip-rule="evenodd" d="M44.827,48c-0.006,0-0.014,0-0.021,0H3.173c-0.298,0-0.581-0.127-0.779-0.352   c-0.197-0.219-0.291-0.514-0.258-0.809l2.156-31.31c0.059-0.527,0.506-0.926,1.036-0.926h8.274v-4.168   C13.603,4.672,18.276,0,24.038,0c5.764,0,10.438,4.672,10.438,10.437v4.168h8.326c0.533,0,0.98,0.401,1.039,0.93l1.98,31.103   c0.031,0.104,0.049,0.209,0.049,0.32C45.87,47.531,45.403,48,44.827,48z M32.388,10.437c0-4.61-3.738-8.349-8.35-8.349   c-4.609,0-8.348,3.738-8.348,8.349v4.168h16.697V10.437z M41.866,16.692h-7.391v2.383c0.621,0.359,1.043,1.027,1.043,1.798   c0,1.151-0.934,2.087-2.088,2.087c-1.152,0-2.086-0.936-2.086-2.087c0-0.771,0.422-1.438,1.043-1.798v-2.383H15.69v2.383   c0.621,0.359,1.043,1.027,1.043,1.798c0,1.151-0.934,2.087-2.088,2.087c-1.152,0-2.086-0.936-2.086-2.087   c0-0.771,0.422-1.438,1.043-1.798v-2.383H6.26L4.342,45.91h39.299L41.866,16.692z" fill-rule="evenodd"/></g></svg>');
+}
+
+/*image slider*/
+.scrolling-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.scrolling-wrapper-card{
+    flex: 0 0 auto;
+}
+.scrolling-img{
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.125);   
+    border-radius: 3px;
+}
+.scrolling-img-pill-count{
+    position: relative;
+    top: 10px;
+    left: calc(100% - 25px);
+    padding: 2px 5px;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    background: rgba(35, 47, 63, 1);
+    z-index: 99;
+}
+
+/*image carousel*/
+.carousel-control-prev-icon{
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='#232F3F' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+.carousel-control-next-icon{
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='#232F3F' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
+.carousel-indicators li{
+    background-color: #232F3F !important;
+}
+.carousel-indicators li.active{
+    background-color: #33adff !important;   
+}
+.carousel-bttn{
+    background: #33adff !important;
+    border: none !important;
 }

@@ -3,7 +3,7 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Routes from './routes';
 
-const Footer = (props) => {
+const Footer = () => {
     var pathName = window.location.pathname;
     console.log(pathName);
 
