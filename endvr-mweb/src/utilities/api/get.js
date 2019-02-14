@@ -1,3 +1,6 @@
+import PubSub from 'pubsub-js';
+import PubSubMapper from '../mappers/pubSubMapper';
+
 class Get {
 
     constructor(eventType,url,callback){
@@ -38,14 +41,20 @@ class Get {
         var request = {
             method: "GET",
             headers: {
-                'Authorization': 'discover',
+                'Authorization': 'auth',
                 'Content-Type': 'application/json'
             }
         }
 
-        fetch(this._url, request)
+        const msg = new PubSubMapper(this._eventType,this._url);
+        msg.setHttpRequestMethod("GET");
+        msg.setShowMessageModal(this._showMessageModal);
+
+         fetch(this._url, request)
         .then(response => response.json())
         .then(response => {
+            msg.setResponse(response);
+            PubSub.publish('endvr-api-request-history', msg.mapper);
             this.metadata = response.metadata;
             this.payload = response.payload;
             

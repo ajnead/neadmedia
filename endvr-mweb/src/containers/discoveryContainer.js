@@ -4,7 +4,7 @@ class DiscoveryContainer extends React.Component {
 
     render(){
         return(
-            <div>Discovery</div>
+            <span></span>
         )
     }
 

@@ -2,6 +2,7 @@ import DefaultView from '../defaultView';
 import HomeContainer from '../../containers/homeContainer';
 import DiscoveryContainer from '../../containers/discoveryContainer';
 import AssistantContainer from '../../containers/assistantContainer';
+import RequestHistoryContainer from '../../containers/requestHistoryContainer';
 
 const Routes = [
     {
@@ -39,6 +40,13 @@ const Routes = [
         component : DefaultView,
         isShown : false,
         iconName : "icon-account"
+    },
+    {
+        navName : "Request History",
+        path : "/requestHistory",
+        component : RequestHistoryContainer,
+        isShown : false,
+        iconName : ''
     }
 ]
 

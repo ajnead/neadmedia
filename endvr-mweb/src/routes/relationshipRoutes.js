@@ -2,10 +2,10 @@ import Configs from '../configs/configs';
 import originTracer from '../utilities/api/originTracer';
 import Get from '../utilities/api/get';
 
-class FeedRoutes {
+class RelationshipRoutes {
 
     constructor(){
-        this._route = Configs.endvrApiUrl + 'feed/';
+        this._routeParent = Configs.endvrApiUrl + 'relationship/parent/';
     }
 
     set returnParam(val){
@@ -16,9 +16,9 @@ class FeedRoutes {
         return this._returnParam;
     }
 
-    getFeed(start,stop,type,feedId,callback){
-        const url = this._route + start + '/' + stop + '/' + type + '/' + feedId + '?' + originTracer();
-        const get = new Get('feedRoutes-getFeed',url,()=>{
+    getParent(parentInstanceId,callback){
+        const url = this._routeParent + parentInstanceId + '?' + originTracer();
+        const get = new Get('relationshipRoutes-getParent',url,()=>{
             this.returnParam = get;
             callback();
         });
@@ -26,4 +26,4 @@ class FeedRoutes {
     }
 }
 
-export default FeedRoutes;
+export default RelationshipRoutes;

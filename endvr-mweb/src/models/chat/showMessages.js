@@ -1,6 +1,5 @@
 import React, {Component } from 'react';
 import { Row, Col } from 'reactstrap';
-import ImageSlider from '../../components/images/imageSlider';
 
 class ShowMessages extends Component {
 
@@ -70,11 +69,11 @@ class ShowMessages extends Component {
                     </Col>
                     <Col xs="10" sm="10">
                         <div className="assistant-name">{m.senderName}</div>
-                        {m.messages.map(message =>
-                        <div className={"assistant-message " + m.bubbleColor}>
+                        {m.messages.map((message, i) => (
+                        <div key={i} className={"assistant-message " + m.bubbleColor}>
                            {message}
                         </div> 
-                        )}
+                        ))}
                     </Col>
                 </Row>
             ))}

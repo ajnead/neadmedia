@@ -9,7 +9,6 @@ class PubSubMapper {
 
     setResponse(response){
         this.metadata = response.metadata;
-        this.payload = response.payload;
         this.httpResponseCode = response.metadata.statusCode
     }
 
@@ -69,10 +68,6 @@ class PubSubMapper {
         return this.eventType;
     }
 
-    get payload() {
-        return this.payload;
-    }
-
     get mapper(){
         return this.mapJson();
     }
@@ -80,7 +75,6 @@ class PubSubMapper {
     mapJson(){
         var json = {
             metadata: this._metadata,
-            payload: this._payload,
             eventType: this._eventType,
             pageUrl: this._pageUrl,
             requestUrl: this._requestUrl,

@@ -5,7 +5,6 @@ import Routes from './routes';
 
 const Footer = () => {
     var pathName = window.location.pathname;
-    console.log(pathName);
 
     for(var route of Routes){
         route.isActive="";

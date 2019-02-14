@@ -2,15 +2,3 @@
     width: 100%;
     height: 100%; 
 }
-.card-body{
-    padding: 10px !important;
-}
-.card-holder{
-    width: 100%;
-    border-bottom: 10px solid rgba(0, 0, 0, 0.075);
-}  
-.card-footer{
-    width: 100%;
-    padding: 10px !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.125);
-}
