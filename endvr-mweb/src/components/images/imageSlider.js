@@ -15,18 +15,29 @@ class ImageSlider extends React.Component {
     render(){
         const countImages = this.props.images.length;
 
-        var fieldName = this.props.fieldName;
-        if(fieldName==undefined){
-            fieldName = 'src';;
+        var fieldName = 'src'; 
+        if(this.props.fieldName!==undefined&&this.props.fieldName!==null){
+            fieldName = this.props.fieldName;
+        }
+
+        var assetUrl = Configs.collectionsImagesUrl;
+        if(this.props.assetUrl!==undefined&&this.props.assetUrl!==null){
+            assetUrl = this.props.assetUrl;
+        }
+
+        var imageClass = '';
+        if(this.props.imageClass!==undefined&&this.props.imageClass!==null){
+            imageClass=' ' + this.props.imageClass;
         }
 
         return(
-            <Row>
-                <div className="scrolling-img-pill-count">{countImages}</div>
+            <Row noGutters>
+                
                 <div className="scrolling-wrapper">
                 {this.props.images.map((imgData, i) => ( 
-                    <Col key={i} xs={this.props.size} sm={this.props.size} >
-                        <img key={i} className="scrolling-img pointer" src={Configs.collectionsImagesUrl + imgData[fieldName]} />
+                    <Col className="scrolling-img-col" key={i} xs={this.props.size} sm={this.props.size} >
+                        <img key={i} className={"scrolling-img pointer" + imageClass} src={assetUrl + imgData[fieldName]} />
+                        {imgData.title!==null ? <div className="font-h8 text-align-center">{imgData.title}</div> : <span></span>}
                     </Col>
                 ))}
                 </div>
@@ -36,3 +47,5 @@ class ImageSlider extends React.Component {
 }
 
 export default ImageSlider;
+
+//<div className="scrolling-img-pill-count">{countImages}</div>

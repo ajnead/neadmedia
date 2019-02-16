@@ -1,6 +1,7 @@
 import React from 'react';
 import FeedRoutes from '../routes/feedRoutes';
 import ParentCard from '../models/feed/parentCard';
+import DiscoveryCard from '../models/feed/discoveryCard';
 
 class HomeContainer extends React.Component {
 
@@ -36,10 +37,18 @@ class HomeContainer extends React.Component {
     }
 
     render(){
+        var CardSwitch = (props) => {
+            switch(props.cardType){
+                case 'parent': return <ParentCard parentInstanceId={props.feed.feedLinedId} />
+                case 'discovery': return <DiscoveryCard feed={props.feed} />
+                default: return <span></span>
+             }
+        }
+
         return(
             <div className="home-container">
                 {this.state.feed.map((feed,i)=>(
-                    <ParentCard key={i} parentInstanceId={feed.feedLineId} />
+                    <CardSwitch key={i} cardType = {feed.feedLineType} feed={feed} />
                 ))}
             </div>
         )

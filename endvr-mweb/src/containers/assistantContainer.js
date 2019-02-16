@@ -1,5 +1,4 @@
 import React from 'react';
-import '../styles/assistant.css';
 import { Input } from 'reactstrap';
 import ShowMessages from '../models/chat/showMessages';
 import Configs from '../configs/configs';

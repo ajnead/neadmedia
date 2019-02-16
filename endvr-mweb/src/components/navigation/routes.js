@@ -10,7 +10,8 @@ const Routes = [
         path : "/home",
         component : HomeContainer,
         isShown : true,
-        iconName : "icon-home"
+        iconName : "icon-home",
+        headerType: "main"
 
     },
     {
@@ -18,35 +19,40 @@ const Routes = [
         path : "/discover",
         component : DiscoveryContainer,
         isShown : true,
-        iconName : "icon-discover"
+        iconName : "icon-discover",
+        headerType: "none"
     },
     {
         navName : "Assistant",
         path : "/assistant",
         component : AssistantContainer,
         isShown : true,
-        iconName : "icon-assistant"
+        iconName : "icon-assistant",
+        headerType: "main"
     },
     {
         navName : "Messages",
         path : "/messages",
         component : DefaultView,
         isShown : false,
-        iconName : "icon-notifications"
+        iconName : "icon-notifications",
+        headerType: "main"
     },
     {
         navName : "Me",
         path : "/me",
         component : DefaultView,
         isShown : false,
-        iconName : "icon-account"
+        iconName : "icon-account",
+        headerType: "main"
     },
     {
         navName : "Request History",
         path : "/requestHistory",
         component : RequestHistoryContainer,
         isShown : false,
-        iconName : ''
+        iconName : "",
+        headerType: "main"
     }
 ]
 
