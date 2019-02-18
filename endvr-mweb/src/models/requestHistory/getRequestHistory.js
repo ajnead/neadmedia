@@ -39,7 +39,7 @@ class GetRequestHistory extends React.Component {
         return(
             <div>
                 {this.state.history.map((history,i)=>(
-                <div className="card-holder">
+                <div key={i} className="card-holder">
                     <Card className="border-0">
                         <CardBody>
                             <Row>

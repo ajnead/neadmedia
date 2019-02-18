@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardBody, CardTitle, CardText } from 'reactstrap';
+import { Row, Col, Card, CardBody, CardTitle, CardText } from 'reactstrap';
 import { Carousel, CarouselIndicators, CarouselControl, CarouselItem, CardImg } from 'reactstrap';
 import Configs from '../../configs/configs';
 import RelationshipRoutes from '../../routes/relationshipRoutes';
@@ -16,7 +16,9 @@ class ParentCard extends React.Component {
                 { src: '81b0ef55d92527af53b4c52989b6ecacd07f5347.feed.jpg', thumbnail: '81b0ef55d92527af53b4c52989b6ecacd07f5347.150.jpg' },
                 { src: '2d1570ce6149e1d2517e6d1957b355a7996b5d42.feed.jpg', thumbnail: '2d1570ce6149e1d2517e6d1957b355a7996b5d42.150.jpg' },         
                 { src: 'a336cf118aac13c965a9be5318c149ecb86a0d3c.feed.jpg', thumbnail: 'a336cf118aac13c965a9be5318c149ecb86a0d3c.150.jpg' },
-                { src: 'f0777db0ad79baf0e44363be1171ed140c7546e4.feed.jpg', thumbnail: 'f0777db0ad79baf0e44363be1171ed140c7546e4.150.jpg' }                  
+                { src: 'f0777db0ad79baf0e44363be1171ed140c7546e4.feed.jpg', thumbnail: 'f0777db0ad79baf0e44363be1171ed140c7546e4.150.jpg' },
+                { src: 'db7a5451099019bf6f9480affb71a3874d4a3093.feed.jpg', thumbnail: 'db7a5451099019bf6f9480affb71a3874d4a3093.150.jpg' },
+                { src: '1518265b3af345f5bf7c383905d25fc6932af9a0.feed.jpg', thumbnail: '1518265b3af345f5bf7c383905d25fc6932af9a0.150.jpg' }
             ],
             parentInstanceId: ''
         };
@@ -77,7 +79,7 @@ class ParentCard extends React.Component {
 
     render(){
         const { activeIndex } = this.state;
-        
+
         const slides = this.state.images.map((item) => {
           return (
             <CarouselItem onExiting={this.onExiting} onExited={this.onExited} key={item.src} >
@@ -90,8 +92,16 @@ class ParentCard extends React.Component {
             <div className="card-holder">
                 <Card className="border-0">
                     <CardBody className="margin-bottom-20">
-                        <CardTitle className="font-weight-600 margin-bottom-5">Nike Zoom Pegasus Turbo</CardTitle>
-                        <CardText className="font-h6">The Nike Zoom Pegasus Turbo is the Pegasus you know and love with major upgrades for speed.</CardText>
+                        <Row>
+                            <div className="parent-card-brand">
+                                <div className={"parent-card-brand-logo nike-logo"}></div>
+                            </div>
+                            <Col className="padding-left-10">
+                                <CardTitle className="font-weight-600 margin-bottom-0">Nike Zoom Pegasus Turbo</CardTitle>
+                                <CardText className="font-h8">Available from Nike.com and 2 others</CardText>
+                            </Col>
+                        </Row>
+                        <CardText className="margin-top-10 font-h8">The Nike Zoom Pegasus Turbo is the Pegasus you know and love with major upgrades for speed.</CardText>
                     </CardBody>
                     <Carousel activeIndex = {activeIndex} next = {this.next} previous = {this.previous} >
                         <CarouselIndicators items = {this.state.images} activeIndex = {activeIndex} onClickHandler = {this.goToIndex} />
@@ -100,7 +110,7 @@ class ParentCard extends React.Component {
                         <CarouselControl direction = "next" directionText = "Next" onClickHandler = {this.next} />
                     </Carousel>
                     <CardBody className="margin-top-10">
-                        <ImageSlider images = {this.state.images} size="auto" fieldName={'thumbnail'} />
+                        <ImageSlider imageClass={"parent-card-variant-slider-img"} images = {this.state.images} size="auto" fieldName={'thumbnail'} />
                     </CardBody>
                 </Card>
                 <CardBody className = "card-footer">

@@ -20,14 +20,14 @@ class DiscoveryCard extends React.Component {
                             "asset": "icon-footware-running-1419787.svg"
                         },
                         {
-                            "title": 'Oxfords',
-                            "link": "",
-                            "asset": "icon-footware-oxford-1419795.svg"
-                        },
-                        {
                             "title": 'Smart Watches',
                             "link": "",
                             "asset": "icon-electronics-smart-watch-1249190.svg"
+                        },
+                        {
+                            "title": 'Oxfords',
+                            "link": "",
+                            "asset": "icon-footware-oxford-1419795.svg"
                         }
                     ]
                 },
@@ -63,7 +63,7 @@ class DiscoveryCard extends React.Component {
                     {this.state.discovery.map((lines,i)=>(
                         <div key={i}>
                             <CardBody>
-                                <CardTitle className="font-weight-600 margin-bottom-5">{lines.header}</CardTitle>
+                                <CardTitle className="font-weight-600 margin-bottom-0">{lines.header}</CardTitle>
                                 <CardText className="font-h7 text-grey">{lines.subHeader}</CardText>
                             </CardBody>
                             <CardBody className="padding-top-0">
