@@ -13,14 +13,15 @@ class ParentCard extends React.Component {
         this.state = {
             activeIndex: 0,
             images: [
-                { src: '81b0ef55d92527af53b4c52989b6ecacd07f5347.feed.jpg', thumbnail: '81b0ef55d92527af53b4c52989b6ecacd07f5347.150.jpg' },
-                { src: '2d1570ce6149e1d2517e6d1957b355a7996b5d42.feed.jpg', thumbnail: '2d1570ce6149e1d2517e6d1957b355a7996b5d42.150.jpg' },         
-                { src: 'a336cf118aac13c965a9be5318c149ecb86a0d3c.feed.jpg', thumbnail: 'a336cf118aac13c965a9be5318c149ecb86a0d3c.150.jpg' },
-                { src: 'f0777db0ad79baf0e44363be1171ed140c7546e4.feed.jpg', thumbnail: 'f0777db0ad79baf0e44363be1171ed140c7546e4.150.jpg' },
-                { src: 'db7a5451099019bf6f9480affb71a3874d4a3093.feed.jpg', thumbnail: 'db7a5451099019bf6f9480affb71a3874d4a3093.150.jpg' },
-                { src: '1518265b3af345f5bf7c383905d25fc6932af9a0.feed.jpg', thumbnail: '1518265b3af345f5bf7c383905d25fc6932af9a0.150.jpg' }
+                { src: '81b0ef55d92527af53b4c52989b6ecacd07f5347.feed.jpg', thumbnail: '81b0ef55d92527af53b4c52989b6ecacd07f5347.150.jpg' }
             ],
-            parentInstanceId: ''
+            parentInstanceId: '',
+            parent: {
+                
+            },
+            title: '',
+            description: '', 
+            brand:  '',
         };
 
         this.next = this.next.bind(this);
@@ -74,7 +75,45 @@ class ParentCard extends React.Component {
     }
 
     loadParent(){
-        var parentInstanceId = this.state.parentInstanceId;
+        const relationshipRoutes = new RelationshipRoutes();
+        relationshipRoutes.getParent(this.state.parentInstanceId,()=>{
+            const response = relationshipRoutes.returnParam;
+            const status = response.metadata.status;
+            var title = '';
+            var description = '';
+            var brand = ''
+
+            var images = [];
+            for(var image of response.payload.images){
+                const imageObj = {
+                    src: image.imageHash + ".feed." + image.formatType,
+                    thumbnail: image.imageHash + ".150." + image.formatType,
+                }
+
+                images.push(imageObj);
+            }
+
+            for(var attribute of response.payload.parentAttributes){
+                switch(attribute.attributeId){
+                    case 1: title = attribute.parentAttributeValues[0].attributeValue; break;
+                    case 4: brand = attribute.parentAttributeValues[0].attributeValue; break;
+                    case 43: description = attribute.parentAttributeValues[0].attributeValue; break;
+                }
+            }
+
+            if(description.indexOf('.')>0){
+                description = description.substring(0,description.indexOf('.'));
+            }
+
+            if(status==="success"){
+                this.setState({
+                    images: images,
+                    title: title,
+                    brand: brand,
+                    description: description
+                })
+            }
+        })
     }
 
     render(){
@@ -97,11 +136,11 @@ class ParentCard extends React.Component {
                                 <div className={"parent-card-brand-logo nike-logo"}></div>
                             </div>
                             <Col className="padding-left-10">
-                                <CardTitle className="font-weight-600 margin-bottom-0">Nike Zoom Pegasus Turbo</CardTitle>
+                                <CardTitle className="font-weight-600 margin-bottom-0">{this.state.title}</CardTitle>
                                 <CardText className="font-h8">Available from Nike.com and 2 others</CardText>
                             </Col>
                         </Row>
-                        <CardText className="margin-top-10 font-h8">The Nike Zoom Pegasus Turbo is the Pegasus you know and love with major upgrades for speed.</CardText>
+                        <CardText className="margin-top-10 font-h8">{this.state.description}</CardText>
                     </CardBody>
                     <Carousel activeIndex = {activeIndex} next = {this.next} previous = {this.previous} >
                         <CarouselIndicators items = {this.state.images} activeIndex = {activeIndex} onClickHandler = {this.goToIndex} />

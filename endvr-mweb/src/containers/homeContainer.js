@@ -39,7 +39,7 @@ class HomeContainer extends React.Component {
     render(){
         var CardSwitch = (props) => {
             switch(props.cardType){
-                case 'parent': return <ParentCard parentInstanceId={props.feed.feedLinedId} />
+                case 'parent': return <ParentCard parentInstanceId={props.feed.feedLineId} />
                 case 'discovery': return <DiscoveryCard feed={props.feed} />
                 default: return <span></span>
              }
