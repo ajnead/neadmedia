@@ -27,7 +27,7 @@ class Modal extends React.Component {
 
     render(){
         return(
-            <div class="e-modal-container">
+            <div className="e-modal-container">
                 <div className = {"e-modal " + this.state.open}>
                     <div className = "e-modal-header">
                         <div className = "e-modal-exit float-right" onClick = {this.exit}></div>

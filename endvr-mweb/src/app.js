@@ -21,8 +21,10 @@ class App extends Component {
   render() {
     return (
       <Container fluid className="padding-0">
-        <Header version={'alpha'} />     
-        <ContainerSwitch />
+        <span className="endvr">
+          <Header version={'alpha'} />     
+          <ContainerSwitch />
+        </span>
         <Footer />
         <div className="display-none">
           <RequestHistoryListener />
