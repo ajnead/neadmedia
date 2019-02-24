@@ -3,6 +3,7 @@ import HomeContainer from '../../containers/homeContainer';
 import DiscoveryContainer from '../../containers/discoveryContainer';
 import AssistantContainer from '../../containers/assistantContainer';
 import RequestHistoryContainer from '../../containers/requestHistoryContainer';
+import QuestionsContainer from '../../containers/questionsContainer';
 
 const Routes = [
     {
@@ -53,6 +54,14 @@ const Routes = [
         isShown : false,
         iconName : "",
         headerType: "main"
+    },
+    {
+        navName : "Questions",
+        path : "/questions",
+        component : QuestionsContainer,
+        isShown : false,
+        iconName : "",
+        headerType: "none"
     }
 ]
 

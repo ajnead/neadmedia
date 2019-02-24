@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input } from 'reactstrap';
+import { isMobile } from 'react-device-detect';
 import ShowMessages from '../models/chat/showMessages';
 import Configs from '../configs/configs';
 
@@ -23,13 +24,20 @@ class AssistantContainer extends React.Component {
             chatId : "", 
             avatar : "agent",
             chatMessages : this.defaultChatMessage,
-            metaData : null
+            metaData : null,
+            isMobile: ''
         }
 
         this.send = this.send.bind(this);
     }
 
     componentDidMount(){
+        if(isMobile){
+            this.setState({
+                isMobile: 'mobile'
+            })
+        }
+
         fetch(Configs.endvrApiUrl + 'chat/idt-1-1/private', {
             method: 'GET',
             headers: {
@@ -95,7 +103,7 @@ class AssistantContainer extends React.Component {
     render() {
         return (
         <div className = "assistant-window">
-            <div className = "assistant-show">
+            <div className = {"assistant-show " + this.state.isMobile}>
                 <ShowMessages chatMessages={this.state.chatMessages} avatar = {"agent"} userName = {"aj"} />
             </div>
             <div className = "assistant-chat">

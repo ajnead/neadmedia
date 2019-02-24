@@ -19,7 +19,7 @@ const Header = (props) => {
     const HeaderSwitch = (props) => {
         switch(props.headerType) {
             case 'main' : return <MainHeader />
-            case 'none' : return <span></span>
+            case 'none' : return <div></div>
             default : return <MainHeader />
         }
     }

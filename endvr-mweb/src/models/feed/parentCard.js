@@ -4,6 +4,7 @@ import { Carousel, CarouselIndicators, CarouselControl, CarouselItem, CardImg } 
 import Configs from '../../configs/configs';
 import RelationshipRoutes from '../../routes/relationshipRoutes';
 import ImageSlider from '../../components/images/imageSlider';
+import Modal from '../../components/display/modal';
 
 class ParentCard extends React.Component {
 
@@ -29,6 +30,7 @@ class ParentCard extends React.Component {
         this.goToIndex = this.goToIndex.bind(this);
         this.onExiting = this.onExiting.bind(this);
         this.onExited = this.onExited.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
 
     componentDidMount(){
@@ -47,6 +49,10 @@ class ParentCard extends React.Component {
                 this.loadParent();
             })
         }
+    }
+
+    toggleModal(){
+        this.refs.skuModal.open();
     }
 
     onExiting() {
@@ -122,7 +128,7 @@ class ParentCard extends React.Component {
         const slides = this.state.images.map((item) => {
           return (
             <CarouselItem onExiting={this.onExiting} onExited={this.onExited} key={item.src} >
-              <CardImg src={Configs.collectionsImagesUrl + item.src} />
+              <CardImg src={Configs.collectionsImagesUrl + item.src} onClick={this.toggleModal} />
             </CarouselItem>
           );
         });
@@ -152,6 +158,7 @@ class ParentCard extends React.Component {
                         <ImageSlider imageClass={"parent-card-variant-slider-img"} images = {this.state.images} size="auto" fieldName={'thumbnail'} />
                     </CardBody>
                 </Card>
+                <Modal ref="skuModal" />
                 <CardBody className = "card-footer">
                     <div className = "font-h7 text-grey">Chosen because you follow Nike</div>
                 </CardBody>

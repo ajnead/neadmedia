@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/feed.css';
 import './styles/endvr.css';
 import './styles/assistant.css';
 import './styles/discovery.css';
+import './styles/feed.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'

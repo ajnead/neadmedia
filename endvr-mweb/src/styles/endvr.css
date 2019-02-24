@@ -1,5 +1,7 @@
 /**z-index:
+  *100000 - pull up
   *99999 - footer
+  *9999 - not used yet
   *999 - header pill
   *99 - image slider pill count
 */
@@ -11,9 +13,13 @@
 }
 
 /*html tag overrides*/
+html{
+    height: 100%;
+}
 body {
     margin: 0;
     padding: 0;
+    min-height: 100%;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen","Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",sans-serif;
 }
 code {
@@ -250,6 +256,49 @@ code {
     font-weight: 400;
 }
 
+/*pull up*/
+.e-modal{
+    display: block;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: 100%; 
+    height: 100%;   
+    background: #fff;
+    z-index: 1000000 !important;
+}
+.e-modal.open{
+    display: block;
+}
+.e-modal.close{
+    display: none;
+}
+.e-modal-header{
+    width: 100%;
+    height: 25px;
+    background-color: #33adff;
+}
+.e-modal-exit{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    top: 30px;
+    margin-top: 0px;
+    margin-right: 5px;
+    cursor: pointer;
+    z-index: 10000001;
+    background: url('../assets/icons/exit.button.svg') no-repeat;
+}
+.e-modal-display{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
 /*the app - header, container, footer*/
 .header{
     width: 100%;
@@ -275,10 +324,9 @@ code {
     background: rgba(204, 0, 0, 1);
     z-index: 999;
 }
-.container{
+.endvr{
     margin: 0px;
     padding: 0px;
-    /*height: calc( 100vh - 90px);*/
     overflow-y: scroll;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

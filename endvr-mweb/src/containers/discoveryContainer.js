@@ -29,14 +29,15 @@ class DiscoveryContainer extends React.Component {
     }
 
     getSearch(){
+        const protocolPrefix = "endvr/";
         const query = this.state.query;
-        const endvrProtocolCheck = query.substring(0,8);
+        const endvrProtocolCheck = query.substring(0,protocolPrefix.length).toLowerCase();
         
-        if("endvr://"===endvrProtocolCheck){
-            const request = query.substring(8);
+        if(protocolPrefix===endvrProtocolCheck){
+            const request = query.substring(protocolPrefix.length);
             this.endvrProtocol(request);
         }else{
-
+            //normal search goes here
         }
     }
 
@@ -44,7 +45,7 @@ class DiscoveryContainer extends React.Component {
         var url = null;
         
         for(var route of Routes){
-            const path = (route.path).substring(1);
+            const path = (route.path).substring(1).toLowerCase();
             if(path===request){
                 url = route.path;
             }
