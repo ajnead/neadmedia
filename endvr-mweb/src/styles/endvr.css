@@ -25,6 +25,16 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",monospace;
 }
+button{
+    border: none !important;
+}
+.divider{
+    width: calc(100% - 10px);
+    border-bottom: 2px solid var(--primary-color);
+}
+.divider.secondary{
+    border-bottom: 2px solid var(--secondary-color);
+}
 
 /*generic styles*/
 .margin-0{
@@ -255,6 +265,9 @@ code {
     color: #888;
     font-weight: 400;
 }
+.bttn-secondary{
+    background: var(--secondary-color);
+}
 
 /*pull up*/
 .e-modal{
@@ -334,6 +347,7 @@ code {
 }
 .footer{
     position: fixed;
+    left: 0px;
     bottom: 0px;
     width: 100%;
     height: 50px;
@@ -457,4 +471,15 @@ code {
     width: 100%;
     padding: 10px !important;
     border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/*sku modal*/
+.sku-add-to-cart{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 60px;
+    background: #fff;
+    z-index: 1000002;
 }

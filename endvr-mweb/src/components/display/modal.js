@@ -33,7 +33,7 @@ class Modal extends React.Component {
                         <div className = "e-modal-exit float-right" onClick = {this.exit}></div>
                     </div>
                     <div className = "e-modal-display">
-                        {'this.state.component'}
+                        {this.props.component}
                     </div>
                 </div>
             </div>

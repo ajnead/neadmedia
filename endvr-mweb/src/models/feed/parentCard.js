@@ -5,6 +5,7 @@ import Configs from '../../configs/configs';
 import RelationshipRoutes from '../../routes/relationshipRoutes';
 import ImageSlider from '../../components/images/imageSlider';
 import Modal from '../../components/display/modal';
+import SkuModal from '../../models/modal/skuModal';
 
 class ParentCard extends React.Component {
 
@@ -23,6 +24,7 @@ class ParentCard extends React.Component {
             title: '',
             description: '', 
             brand:  '',
+            skuComponent: <SkuModal parent={{}} parentInstanceId={''} />
         };
 
         this.next = this.next.bind(this);
@@ -51,8 +53,13 @@ class ParentCard extends React.Component {
         }
     }
 
-    toggleModal(){
-        this.refs.skuModal.open();
+    toggleModal(imageSrc){
+        this.setState({
+            imageSrc: imageSrc
+        },()=>{
+            this.updateSkuComponent();
+            this.refs.skuModal.open();
+        })
     }
 
     onExiting() {
@@ -116,9 +123,22 @@ class ParentCard extends React.Component {
                     images: images,
                     title: title,
                     brand: brand,
-                    description: description
+                    description: description,
+                    parent: response.payload,
                 })
             }
+        })
+    }
+
+    updateSkuComponent(){
+        const component = 
+            <SkuModal 
+                parent={this.state.parent} 
+                parentInstanceId={this.state.parentInstanceId}
+                imageSrc={this.state.imageSrc}
+            />;
+        this.setState({
+            skuComponent: component
         })
     }
 
@@ -128,7 +148,7 @@ class ParentCard extends React.Component {
         const slides = this.state.images.map((item) => {
           return (
             <CarouselItem onExiting={this.onExiting} onExited={this.onExited} key={item.src} >
-              <CardImg src={Configs.collectionsImagesUrl + item.src} onClick={this.toggleModal} />
+              <CardImg src={Configs.collectionsImagesUrl + item.src} onClick={()=>this.toggleModal(item.src)} />
             </CarouselItem>
           );
         });
@@ -158,7 +178,10 @@ class ParentCard extends React.Component {
                         <ImageSlider imageClass={"parent-card-variant-slider-img"} images = {this.state.images} size="auto" fieldName={'thumbnail'} />
                     </CardBody>
                 </Card>
-                <Modal ref="skuModal" />
+                <Modal 
+                    ref="skuModal" 
+                    component={this.state.skuComponent} 
+                />
                 <CardBody className = "card-footer">
                     <div className = "font-h7 text-grey">Chosen because you follow Nike</div>
                 </CardBody>
