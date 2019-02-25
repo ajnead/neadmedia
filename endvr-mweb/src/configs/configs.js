@@ -1,5 +1,5 @@
 const Configs = {
-    endvrApiUrl: "http://localhost/collections/api/",
+    endvrApiUrl: "http://10.1.29.166/collections/api/",
     collectionsImagesUrl: "https://collectionsimg.blob.core.windows.net/images/",
     iconAssetsUrl: "https://endvrassets.blob.core.windows.net/icons/"
 }
