@@ -3,6 +3,7 @@ import { Row, Col } from 'reactstrap';
 import { Card, CardBody, CardTitle, CardText, CardImg, Button } from 'reactstrap';
 import Configs from '../../configs/configs';
 import Pill from '../../components/display/pill';
+import SelectVariant from '../parent/components/selectVariant';
 
 class SkuModal extends React.Component {
 
@@ -19,7 +20,8 @@ class SkuModal extends React.Component {
             title: '',
             description: '',
             brand: '',
-            variants: []
+            variants: [],
+            preferences: []
         }
     }
 
@@ -30,7 +32,6 @@ class SkuModal extends React.Component {
                 parent: this.props.parent,
                 imageSrc: this.props.imageSrc
             },()=>{
-                console.log(this.state);
                 this.loadSku();
             })
         }
@@ -48,6 +49,8 @@ class SkuModal extends React.Component {
         var title = '';
         var description = '';
         var variants = [];
+
+        //get the attribute data for display
         for(var attribute of attributes){
             switch(attribute.attributeId){
                 case 1: title = attribute.parentAttributeValues[0].attributeValue; break;
@@ -56,21 +59,33 @@ class SkuModal extends React.Component {
             }
 
             if(attribute.isVariantAttribute){
+                //TODO: need to look up attribute names from attribute model
+                //TODO: expose public attribute api with names for endvr
+                switch(attribute.attributeId){
+                    case 11: attribute.attributeName='Size'; break;
+                    case 12: attribute.attributeName='Color'; break;
+                }
                 variants.push(attribute);
             }
         }
 
-        for(var variant of variants){
-            //need to process the variants[] below to show in the skuModal
-        }
+        //TODO: need to be able to select the clicked/store preferences and pass to variant components
+        //organize the preferences
+        var preferences = [{
+            attributeId: 12,
+            attributeValue: this.state.imageSrc
+        }]
 
         this.setState({
             title: title,
             brand: brand,
-            description: description
+            description: description,
+            variants: variants,
+            preferences: preferences
         })
 
-        //lazy load remainder of content
+        //TODO: lazy load remainder of content from SKU / collections 
+        //TODO: need to have loader icons/text/imagery during lazy load
     }
 
     render(){
@@ -78,7 +93,7 @@ class SkuModal extends React.Component {
             <div>
                 <div className="sku-modal-view">
                     <Card className="border-0">
-                        <CardBody>
+                        <CardBody className="padding-top-0">
                             <Row>
                                 <div className="parent-card-brand">
                                     <div className={"parent-card-brand-logo nike-logo"}></div>
@@ -92,7 +107,7 @@ class SkuModal extends React.Component {
                         <CardImg src={Configs.collectionsImagesUrl + this.state.imageSrc}></CardImg>
                         <CardBody>
                             <CardText tag="h5">Collections</CardText>
-                            <div class="divider secondary"></div>
+                            <div className="divider secondary"></div>
                             <div className="margin-top-10">
                                 <Pill text={'Top Running Shoes'} isLink={true} to={'/discover?collectionInstanceId=col-1-1'}></Pill>
                                 <Pill text={'Nike Top 100'} isLink={true} to={'/discover?collectionInstanceId=col-2-1'} ></Pill>
@@ -100,24 +115,17 @@ class SkuModal extends React.Component {
                                 <Pill text={'My Favorites'} isLink={true} to={'/discover?collectionInstanceId=col-3-1'} isSecondary={true}></Pill>
                             </div>
                         </CardBody>
-                        <CardBody>
-                            <CardText tag="h5">Colors</CardText>
-                            <div class="divider secondary"></div>
-                            <CardText className="margin-top-10 font-h7">Load Colors Here</CardText>
-                        </CardBody>
-                        <CardBody>
-                            <CardText tag="h5">Sizes</CardText>
-                            <div class="divider secondary"></div>
-                            <CardText className="margin-top-10 font-h7">Load Sizes Here</CardText>
-                        </CardBody>
+                        {this.state.variants.map((variant,i)=>(
+                            <SelectVariant key={i} variant={variant} attributeId={variant.attributeId} preferences={this.state.imageSrc} />
+                        ))}
                         <CardBody>
                             <CardText tag="h5">Description</CardText>
-                            <div class="divider secondary"></div>
+                            <div className="divider secondary"></div>
                             <CardText className="margin-top-10 font-h7">{this.state.description}</CardText>
                         </CardBody>
                         <CardBody>
                             <CardText tag="h5">Sellers</CardText>
-                            <div class="divider secondary"></div>
+                            <div className="divider secondary"></div>
                             <CardText className="margin-top-10 font-h7">Load Sellers Here</CardText>
                         </CardBody>
                     </Card>

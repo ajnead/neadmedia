@@ -1,0 +1,135 @@
+import React from 'react';
+import { Container, Row, Col, Card, CardBody, CardText, CardImg } from 'reactstrap';
+import Configs from '../../../configs/configs';
+
+class SelectVariant extends React.Component {
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            selected: '',
+            variant: {}, 
+            attributeId: 0,
+            variantsPerRow: 4,
+            variantRowsForDisplay: null,
+            variantsOpen: false,
+            variantDisplayClassState: 'display-none'
+        }
+
+        this.toggle = this.toggle.bind(this);
+        this.changeSelected = this.changeSelected.bind(this);
+    }
+
+    toggle(){
+        this.setState({
+            variantsOpen: !this.state.variantsOpen,
+            variantDisplayClassState: this.state.variantsOpen ? 'display-none' : 'display-block'
+        })
+    }
+
+    changeSelected(selected){
+        this.setState({
+            selected: selected
+        })
+    }
+
+    componentDidMount(){
+        this.setState({
+            variant: this.props.variant,
+            attributeId: this.props.attributeId,
+            preferences: this.props.preferences
+        },()=>{
+            this.loadVariant();
+        })
+    }
+
+    componentDidUpdate(){
+        if(this.state.attributeId!==this.props.attributeId){
+            this.setState({
+                variant: this.props.variant,
+                attributeId: this.props.attributeId,
+                preferences: this.props.preferences
+            },()=>{
+                this.loadVariant();
+            })
+        }
+    }
+
+    loadVariant(){
+        const variantsValues = this.state.variant.parentAttributeValues;
+        
+        var variantRowsForDisplay = [];
+        if(variantsValues!==null&&variantsValues!==undefined){
+            const numOfValues = variantsValues.length;  
+            var valuesPerRow = this.state.variantsPerRow;
+            const numOfRows = Math.ceil(numOfValues / valuesPerRow);
+            const colGrid = Math.floor(12 / valuesPerRow);
+
+            var variantRowsForDisplay = [];
+            for(var r = 0; r < numOfRows; r++){
+                var variantsForThisRow = [];
+                var min = r * valuesPerRow;
+                var max = (min + valuesPerRow);
+
+                if(max>numOfValues){
+                    max=numOfValues;
+                }
+            
+                for(var l = min; l < max; l++){
+                    variantsForThisRow.push(variantsValues[l]);
+                }
+
+                variantRowsForDisplay.push(
+                    <Row key={r} className="margin-top-10 padding-0 margin-left-0 margin-right-0">
+                        {variantsForThisRow.map((val,i)=>(
+                            <Col key={i} xs={colGrid} className="padding-left-0">
+                                <Card className="card-button">
+                                    {this.state.variant.loadSwatch || this.state.variant.loadThumbnail ? 
+                                        (
+                                            <CardBody className="card-button-font">
+                                                <CardImg top width="100%" src={Configs.collectionsImagesUrl + val.imageHash + ".150." + val.formatType} alt="No image" />
+                                            </CardBody>
+                                        ) 
+                                        :(
+                                            <CardBody className="card-button-font">
+                                                {val.attributeValue}
+                                            </CardBody>
+                                        )
+                                    }                                
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
+                );
+            }
+        }
+
+        this.setState({
+            variantRowsForDisplay: variantRowsForDisplay
+        })
+    }
+
+    getVariantSelected(){
+        return this.state.selected;
+    }
+
+    render(){
+        const ArrowToShow = (props) => {
+            var className = props.variantsOpen ? 'icon-arrow-down' : 'icon-arrow-right';
+            return <div className={'sku-modal-variant-show-bttn float-right ' + className} onClick={props.toggle}></div>
+        }
+
+        return(
+            <CardBody>
+                <CardText tag="h5">{this.state.variant.attributeName} <ArrowToShow toggle={this.toggle} variantsOpen={this.state.variantsOpen} /></CardText>
+                <div className="divider secondary"></div>
+                <div className={this.state.variantDisplayClassState}>
+                    {this.state.variantRowsForDisplay!==null ? this.state.variantRowsForDisplay  : <CardText className="margin-top-10 font-h7">Loading...</CardText>}
+                </div>
+            </CardBody>
+        )
+    }
+}
+
+export default SelectVariant;

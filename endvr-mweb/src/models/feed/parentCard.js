@@ -5,7 +5,7 @@ import Configs from '../../configs/configs';
 import RelationshipRoutes from '../../routes/relationshipRoutes';
 import ImageSlider from '../../components/images/imageSlider';
 import Modal from '../../components/display/modal';
-import SkuModal from '../../models/modal/skuModal';
+import SkuModal from '../parent/skuModal';
 
 class ParentCard extends React.Component {
 
