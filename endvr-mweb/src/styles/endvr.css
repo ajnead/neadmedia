@@ -513,11 +513,15 @@ button{
     padding: 0.5rem 0.75rem;
 }
 .card-button.active{
-    border: none;
-    background-color: #18BC9C !important;
+    background-color: var(--secondary-color) !important;
     cursor: pointer;
     color: #fff;
 }
+.card-button.active-link{
+    border: 2px solid var(--secondary-color) !important;
+    cursor: pointer;
+}
+
 
 /*sku modal*/
 .sku-modal-view{

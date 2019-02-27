@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Card, CardBody, CardText, CardImg } from 'reactstrap';
+import { Row, Col, Card, CardBody, CardText, CardImg } from 'reactstrap';
 import Configs from '../../../configs/configs';
 
 class SelectVariant extends React.Component {
@@ -13,8 +13,7 @@ class SelectVariant extends React.Component {
             attributeId: 0,
             variantsPerRow: 4,
             variantRowsForDisplay: null,
-            variantsOpen: false,
-            variantDisplayClassState: 'display-none'
+            variantsOpen: true
         }
 
         this.toggle = this.toggle.bind(this);
@@ -23,14 +22,15 @@ class SelectVariant extends React.Component {
 
     toggle(){
         this.setState({
-            variantsOpen: !this.state.variantsOpen,
-            variantDisplayClassState: this.state.variantsOpen ? 'display-none' : 'display-block'
+            variantsOpen: !this.state.variantsOpen
         })
     }
 
     changeSelected(selected){
         this.setState({
             selected: selected
+        },()=>{
+            this.loadVariant();
         })
     }
 
@@ -77,6 +77,35 @@ class SelectVariant extends React.Component {
                 }
             
                 for(var l = min; l < max; l++){
+                    //preferences lookup to set default variant selected
+                    //TODO: the selection of preferences need to be confirm will work accross units
+                    //TODO: refactor this to make this more precise to preferences
+                    var selected = this.state.selected;
+                    const preferences = this.state.preferences;
+                    if(preferences!==null){
+                        for(const preference of preferences){
+                            if(this.state.attributeId===preference.attributeId){
+                                if(preference.imageHash===variantsValues[l].imageHash||preference.attributeValue===variantsValues[l].attributeValue){
+                                    selected = variantsValues[l].parentAttributeValueId;
+                                    this.setState({
+                                        preferences: null,
+                                        selected: variantsValues[l].parentAttributeValueId
+                                    });
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    variantsValues[l].active = '';
+                    if(selected===variantsValues[l].parentAttributeValueId){
+                        variantsValues[l].active = 'active';
+                        
+                        if(this.state.variant.requiresPageReload){
+                            this.props.onVariantChange(null,variantsValues[l].imageHash,variantsValues[l].formatType);
+                        }
+                    }
+
                     variantsForThisRow.push(variantsValues[l]);
                 }
 
@@ -84,15 +113,15 @@ class SelectVariant extends React.Component {
                     <Row key={r} className="margin-top-10 padding-0 margin-left-0 margin-right-0">
                         {variantsForThisRow.map((val,i)=>(
                             <Col key={i} xs={colGrid} className="padding-left-0">
-                                <Card className="card-button">
+                                <Card className={"card-button " + val.active}>
                                     {this.state.variant.loadSwatch || this.state.variant.loadThumbnail ? 
                                         (
-                                            <CardBody className="card-button-font">
+                                            <CardBody className={'card-button-font'} onClick={()=>this.changeSelected(val.parentAttributeValueId)}>
                                                 <CardImg top width="100%" src={Configs.collectionsImagesUrl + val.imageHash + ".150." + val.formatType} alt="No image" />
                                             </CardBody>
                                         ) 
                                         :(
-                                            <CardBody className="card-button-font">
+                                            <CardBody className="card-button-font" onClick={()=>this.changeSelected(val.parentAttributeValueId)}>
                                                 {val.attributeValue}
                                             </CardBody>
                                         )
@@ -124,7 +153,7 @@ class SelectVariant extends React.Component {
             <CardBody>
                 <CardText tag="h5">{this.state.variant.attributeName} <ArrowToShow toggle={this.toggle} variantsOpen={this.state.variantsOpen} /></CardText>
                 <div className="divider secondary"></div>
-                <div className={this.state.variantDisplayClassState}>
+                <div className={this.state.variantsOpen ? 'display-block' : 'display-none'}>
                     {this.state.variantRowsForDisplay!==null ? this.state.variantRowsForDisplay  : <CardText className="margin-top-10 font-h7">Loading...</CardText>}
                 </div>
             </CardBody>

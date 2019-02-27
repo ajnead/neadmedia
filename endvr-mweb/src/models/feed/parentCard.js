@@ -53,9 +53,9 @@ class ParentCard extends React.Component {
         }
     }
 
-    toggleModal(imageSrc){
+    toggleModal(imageHash){
         this.setState({
-            imageSrc: imageSrc
+            imageHash: imageHash
         },()=>{
             this.updateSkuComponent();
             this.refs.skuModal.open();
@@ -101,6 +101,7 @@ class ParentCard extends React.Component {
                 const imageObj = {
                     src: image.imageHash + ".feed." + image.formatType,
                     thumbnail: image.imageHash + ".150." + image.formatType,
+                    hash: image.imageHash
                 }
 
                 images.push(imageObj);
@@ -135,7 +136,7 @@ class ParentCard extends React.Component {
             <SkuModal 
                 parent={this.state.parent} 
                 parentInstanceId={this.state.parentInstanceId}
-                imageSrc={this.state.imageSrc}
+                imageHash={this.state.imageHash}
             />;
         this.setState({
             skuComponent: component
@@ -148,7 +149,7 @@ class ParentCard extends React.Component {
         const slides = this.state.images.map((item) => {
           return (
             <CarouselItem onExiting={this.onExiting} onExited={this.onExited} key={item.src} >
-              <CardImg src={Configs.collectionsImagesUrl + item.src} onClick={()=>this.toggleModal(item.src)} />
+              <CardImg src={Configs.collectionsImagesUrl + item.src} onClick={()=>this.toggleModal(item.hash)} />
             </CarouselItem>
           );
         });

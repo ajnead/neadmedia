@@ -23,22 +23,31 @@ class SkuModal extends React.Component {
             variants: [],
             preferences: []
         }
+
+        this.changeSku = this.changeSku.bind(this);
     }
 
     componentDidUpdate(){
         if(this.state.parentInstanceId!==this.props.parentInstanceId){
             this.setState({
                 parentInstanceId: this.props.parentInstanceId,
-                parent: this.props.parent,
-                imageSrc: this.props.imageSrc
+                parent: this.props.parent
             },()=>{
                 this.loadSku();
             })
         }
+    }
 
-        if(this.state.imageSrc!==this.props.imageSrc){
+    componentWillReceiveProps(nextProps){
+        const imageFeed = nextProps.imageHash + '.feed.jpg';
+        if(nextProps.imageHash!==this.props.imageHash){
             this.setState({
-                imageSrc: this.props.imageSrc
+                parentInstanceId: nextProps.parentInstanceId,
+                parent: nextProps.parent,
+                imageSrc: imageFeed,
+                imageHash: nextProps.imageHash
+            },()=>{
+                this.loadSku();
             })
         }
     }
@@ -73,7 +82,8 @@ class SkuModal extends React.Component {
         //organize the preferences
         var preferences = [{
             attributeId: 12,
-            attributeValue: this.state.imageSrc
+            attributeValue: null,
+            imageHash: this.state.imageHash
         }]
 
         this.setState({
@@ -86,6 +96,20 @@ class SkuModal extends React.Component {
 
         //TODO: lazy load remainder of content from SKU / collections 
         //TODO: need to have loader icons/text/imagery during lazy load
+    }
+
+    //TODO: this is being used by the variant to change just the image, this will need to reload the sku
+    //TODO: how will this work with the this.loadSku()
+    changeSku(skuInstanceId,imageHash,formatType){
+        if(imageHash!==null){
+            const imageFeed = imageHash + '.feed.' + formatType;
+            this.setState({
+                imageSrc: imageFeed,
+                imageHash: this.props.imageHash
+            },()=>{
+                console.log(this.state);
+            })
+        }
     }
 
     render(){
@@ -116,7 +140,12 @@ class SkuModal extends React.Component {
                             </div>
                         </CardBody>
                         {this.state.variants.map((variant,i)=>(
-                            <SelectVariant key={i} variant={variant} attributeId={variant.attributeId} preferences={this.state.imageSrc} />
+                            <SelectVariant 
+                                key={i} 
+                                variant={variant} 
+                                attributeId={variant.attributeId} 
+                                preferences={this.state.preferences}
+                                onVariantChange={this.changeSku} />
                         ))}
                         <CardBody>
                             <CardText tag="h5">Description</CardText>
