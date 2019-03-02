@@ -1,9 +1,10 @@
 import React from 'react';
 import { Row, Col } from 'reactstrap';
 import { Card, CardBody, CardTitle, CardText, CardImg, Button } from 'reactstrap';
+import { Nav, NavItem } from 'reactstrap';
 import Configs from '../../configs/configs';
-import Pill from '../../components/display/pill';
 import SelectVariant from '../parent/components/selectVariant';
+import DisplayCollections from '../parent/components/displayCollections';
 
 class SkuModal extends React.Component {
 
@@ -113,6 +114,23 @@ class SkuModal extends React.Component {
     }
 
     render(){
+        const ButtonBar = (props) => {
+            return(
+                <div className="sku-modal-bttn-bar">
+                    <Nav justified>
+                        <NavItem className="padding-top-5 font-h7">
+                            <div className = {"sku-modal-bttn-bar-icon icon-addition-bttn"} ></div>
+                             Add to Cart
+                        </NavItem>
+                        <NavItem className="padding-top-5 font-h7">
+                            <div className = {"sku-modal-bttn-bar-icon icon-heart-bttn"} ></div>
+                            Collect
+                        </NavItem>
+                    </Nav>
+                </div>
+            )
+        }
+
         return(
             <div>
                 <div className="sku-modal-view">
@@ -129,16 +147,7 @@ class SkuModal extends React.Component {
                             </Row>
                         </CardBody>
                         <CardImg src={Configs.collectionsImagesUrl + this.state.imageSrc}></CardImg>
-                        <CardBody>
-                            <CardText tag="h5">Collections</CardText>
-                            <div className="divider secondary"></div>
-                            <div className="margin-top-10">
-                                <Pill text={'Top Running Shoes'} isLink={true} to={'/discover?collectionInstanceId=col-1-1'}></Pill>
-                                <Pill text={'Nike Top 100'} isLink={true} to={'/discover?collectionInstanceId=col-2-1'} ></Pill>
-                                <Pill text={'Top 1000 Shoes'} isLink={true} to={'/discover?collectionInstanceId=col-4-1'} ></Pill>
-                                <Pill text={'My Favorites'} isLink={true} to={'/discover?collectionInstanceId=col-3-1'} isSecondary={true}></Pill>
-                            </div>
-                        </CardBody>
+                        <DisplayCollections />
                         {this.state.variants.map((variant,i)=>(
                             <SelectVariant 
                                 key={i} 
@@ -159,9 +168,7 @@ class SkuModal extends React.Component {
                         </CardBody>
                     </Card>
                 </div>
-                <div className="sku-modal-add-bttn">
-                    <Button block className="bttn-secondary">Add To Basket</Button>
-                </div>
+                <ButtonBar />
             </div>
         )
     }

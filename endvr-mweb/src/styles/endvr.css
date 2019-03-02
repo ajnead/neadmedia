@@ -9,7 +9,13 @@
 /*common css vars*/
 :root{
     --primary-color: #232F3F;
+    --primary-color-opacity: rgba(35,47,64,.1);
     --secondary-color: #33adff;
+    --secondary-color-opacity: rgba(51,173,255,.8);
+}
+
+::-webkit-scrollbar { 
+    display: none; 
 }
 
 /*html tag overrides*/
@@ -27,6 +33,8 @@ code {
 }
 button{
     border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 .divider{
     width: calc(100% - 10px);
@@ -247,6 +255,9 @@ button{
 .font-weight-600{
     font-weight: 600;
 }
+.font-italic{
+    font-style: italic
+}
 .border-0{
     border: none !important;
 }
@@ -433,6 +444,12 @@ button{
 .icon-arrow-down{
     background: url('../assets/icons/arrow-down.svg') no-repeat;
 }
+.icon-heart-bttn{
+    background: url('../assets/icons/heart.button.svg') no-repeat;
+}
+.icon-addition-bttn{
+    background: url('../assets/icons/addition.button.svg') no-repeat;
+}
 
 /*image slider*/
 .scrolling-wrapper {
@@ -462,6 +479,13 @@ button{
 }
 .scrolling-img-col{
     padding-left: 0px !important;
+}
+
+/*feed images*/
+.feed-card-img{
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.125);   
+    border-radius: 3px;
 }
 
 /*image carousel*/
@@ -525,22 +549,36 @@ button{
 
 /*sku modal*/
 .sku-modal-view{
-    height: calc(100% - 100px);
+    width: 100vw;
+    height: calc(100vh - 100px);
     overflow-x: none;
     overflow-y: auto;
+    box-sizing: content-box;
 }
-.sku-modal-add-bttn{
+.sku-modal-bttn-bar{
     position: fixed;
     bottom: 0px;
     left: 0px;
-    width: calc(100% - 10px);
+    width: 100%;
     height: 60px;
     padding: 0px 0px 0px 5px;
-    background: #fff;
+    background: var(--primary-color-opacity);
     z-index: 1000002;
+    color: var(--secondary-color);
 }
 .sku-modal-variant-show-bttn{
     width: 28px;
     height: 28px;
     margin-right: 10px;
+}
+.sku-modal-general-bttn{
+    width: 28px;
+    height: 28px;
+}
+.sku-modal-bttn-bar-icon{
+    width: 30px;
+    height: 30px;
+    margin-top:1px;
+    margin-left: auto;
+    margin-right: auto;
 }

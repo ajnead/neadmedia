@@ -13,7 +13,8 @@ class SelectVariant extends React.Component {
             attributeId: 0,
             variantsPerRow: 4,
             variantRowsForDisplay: null,
-            variantsOpen: true
+            variantsOpen: true,
+            selectedValueForDisplay: 'Choose an option'
         }
 
         this.toggle = this.toggle.bind(this);
@@ -44,14 +45,14 @@ class SelectVariant extends React.Component {
         })
     }
 
-    componentDidUpdate(){
-        if(this.state.attributeId!==this.props.attributeId){
+    componentWillReceiveProps(nextProps){
+        if(nextProps.preferences!==this.props.preferences){
             this.setState({
-                variant: this.props.variant,
-                attributeId: this.props.attributeId,
-                preferences: this.props.preferences
+                preferences: nextProps.preferences
             },()=>{
-                this.loadVariant();
+                if(this.state.attributeId>0){
+                    this.loadVariant();
+                }   
             })
         }
     }
@@ -66,6 +67,35 @@ class SelectVariant extends React.Component {
             const numOfRows = Math.ceil(numOfValues / valuesPerRow);
             const colGrid = Math.floor(12 / valuesPerRow);
 
+            //preferences lookup to set default variant selected
+            //TODO: the selection of preferences need to be confirm will work accross units
+            //TODO: refactor this to make this more precise to preferences
+            var selected = this.state.selected;
+            for(var value of variantsValues){
+                const preferences = this.state.preferences;
+                if(preferences!==null){
+                    for(const preference of preferences){
+                        if(this.state.attributeId===preference.attributeId){
+                            if(preference.imageHash===value.imageHash||preference.attributeValue===value.attributeValue){
+                                selected = value.parentAttributeValueId;
+                                
+                                this.setState({
+                                    preferences: null,
+                                    selected: value.parentAttributeValueId
+                                });
+                            }
+                        }
+                    }
+                }
+
+                if(selected===value.parentAttributeValueId){
+                    this.setState({
+                        selectedValueForDisplay: value.attributeValue
+                    })
+                }
+            }
+
+            //builld the variant display
             var variantRowsForDisplay = [];
             for(var r = 0; r < numOfRows; r++){
                 var variantsForThisRow = [];
@@ -76,27 +106,7 @@ class SelectVariant extends React.Component {
                     max=numOfValues;
                 }
             
-                for(var l = min; l < max; l++){
-                    //preferences lookup to set default variant selected
-                    //TODO: the selection of preferences need to be confirm will work accross units
-                    //TODO: refactor this to make this more precise to preferences
-                    var selected = this.state.selected;
-                    const preferences = this.state.preferences;
-                    if(preferences!==null){
-                        for(const preference of preferences){
-                            if(this.state.attributeId===preference.attributeId){
-                                if(preference.imageHash===variantsValues[l].imageHash||preference.attributeValue===variantsValues[l].attributeValue){
-                                    selected = variantsValues[l].parentAttributeValueId;
-                                    this.setState({
-                                        preferences: null,
-                                        selected: variantsValues[l].parentAttributeValueId
-                                    });
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
+                for(var l = min; l < max; l++){                    
                     variantsValues[l].active = '';
                     if(selected===variantsValues[l].parentAttributeValueId){
                         variantsValues[l].active = 'active';
@@ -155,6 +165,9 @@ class SelectVariant extends React.Component {
                 <div className="divider secondary"></div>
                 <div className={this.state.variantsOpen ? 'display-block' : 'display-none'}>
                     {this.state.variantRowsForDisplay!==null ? this.state.variantRowsForDisplay  : <CardText className="margin-top-10 font-h7">Loading...</CardText>}
+                </div>
+                <div className={!this.state.variantsOpen ? 'display-block' : 'display-none'}>
+                    <CardText className="margin-top-10 font-h7">{this.state.selectedValueForDisplay}</CardText>
                 </div>
             </CardBody>
         )

@@ -32,7 +32,6 @@ class ImageSlider extends React.Component {
 
         return(
             <Row noGutters>
-                
                 <div className="scrolling-wrapper">
                 {this.props.images.map((imgData, i) => ( 
                     <Col className="scrolling-img-col" key={i} xs={this.props.size} sm={this.props.size} >

@@ -2,6 +2,7 @@ import React from 'react';
 import FeedRoutes from '../routes/feedRoutes';
 import ParentCard from '../models/feed/parentCard';
 import DiscoveryCard from '../models/feed/discoveryCard';
+import QuestionCard from '../models/feed/questionCard';
 
 class HomeContainer extends React.Component {
 
@@ -41,6 +42,7 @@ class HomeContainer extends React.Component {
             switch(props.cardType){
                 case 'parent': return <ParentCard parentInstanceId={props.feed.feedLineId} />
                 case 'discovery': return <DiscoveryCard feed={props.feed} />
+                case 'question': return <QuestionCard feed={props.feed} />
                 default: return <span></span>
              }
         }
