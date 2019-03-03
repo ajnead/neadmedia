@@ -2,6 +2,8 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 import { Card, CardBody, CardTitle, CardText, CardImg } from 'reactstrap';
 import Configs from '../../configs/configs';
+import Modal from '../../components/display/modal';
+import QuestionsModal from '../question/questionsModal';
 
 class QuestionCard extends React.Component {
 
@@ -31,14 +33,21 @@ class QuestionCard extends React.Component {
                                 asset: "icon-city-skyline-3305208.svg"
                             }
                         ]
-                    },
-                    {
-                        questionId: "qqq-1-1"
-                    },                        
+                    }                     
                 ]
-
-            }
+            },
+            component: <QuestionsModal />
         }
+
+        this.questionAnswered = this.questionAnswered.bind(this);
+    }
+
+    questionAnswered(choice){
+        this.setState({
+            component : <QuestionsModal question={this.state.question.questions[0]} />
+        },()=>{
+            this.refs.questionsModal.open();
+        })
     }
 
     render(){
@@ -53,17 +62,18 @@ class QuestionCard extends React.Component {
                     <CardBody>
                         <CardText className="font-h6"><span className="font-weight-600">New question</span>: {this.state.question.questions[0].question}</CardText>
                         <Row>
-                            <Col>
+                            <Col className="pointer" onClick={()=>this.questionAnswered(this.state.question.questions[0].choices[0].choiceText)}>
                                 <CardImg className="feed-card-img" width={'100%'} src={assetUrl + this.state.question.questions[0].choices[0].asset} />
                                 <div className="font-h6 font-weight-600 text-align-center">{this.state.question.questions[0].choices[0].choiceText}</div>
                             </Col>
-                            <Col>
+                            <Col className="pointer" onClick={()=>this.questionAnswered(this.state.question.questions[0].choices[1].choiceText)}>
                                 <CardImg className="feed-card-img" width={'100%'} src={assetUrl + this.state.question.questions[0].choices[1].asset} />
                                 <div className="font-h6 font-weight-600 text-align-center">{this.state.question.questions[0].choices[1].choiceText}</div>
                             </Col>
                         </Row>
                     </CardBody>
                 </Card>
+                <Modal ref="questionsModal" component={this.state.component} />
             </div>
         )
     }

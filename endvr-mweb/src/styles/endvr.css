@@ -267,6 +267,9 @@ button{
 .display-block{
     display: block;
 }
+.pointer{
+    cursor: pointer;
+}
 
 /*generic reusable styles*/
 .vertical-breaks{
