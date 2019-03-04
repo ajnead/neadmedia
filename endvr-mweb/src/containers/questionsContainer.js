@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from '../components/display/modal';
-import QuestionsModal from '../models/customer/questionsModal';
+import QuestionsModal from '../models/question/questionsModal';
 
 class QuestionsContainer extends React.Component {
 
