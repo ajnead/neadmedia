@@ -341,13 +341,17 @@ button{
 .e-modal-display{
     width: 100%;
     height: 100%;
-    overflow-x: none;
+    overflow-x: hidden;
     overflow-y: scroll;
     box-sizing: content-box;
-    scroll-behavior: smooth;
+    overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none; 
 }
-
+.e-modal-display::-webkit-scrollbar { 
+    display: none; 
+} 
 /*the app - header, container, footer*/
 .header{
     width: 100%;
@@ -377,11 +381,15 @@ button{
     margin: 0px;
     padding: 0px;
     overflow-y: scroll;
-    overflow-x: none;
+    overflow-x: hidden;
     box-sizing: content-box;
-    scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none; 
 }
+.endvr::-webkit-scrollbar { 
+    display: none; 
+} 
 .footer{
     position: fixed;
     left: 0px;
@@ -463,7 +471,12 @@ button{
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none; 
 }
+.scrolling-row::-webkit-scrollbar { 
+    display: none; 
+} 
 .scrolling-wrapper-card{
     flex: 0 0 auto;
 }

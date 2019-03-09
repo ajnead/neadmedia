@@ -73,7 +73,12 @@ class QuestionCard extends React.Component {
                         </Row>
                     </CardBody>
                 </Card>
-                <Modal ref="questionsModal" component={this.state.component} />
+                <Modal 
+                    ref="questionsModal" 
+                    component={this.state.component} 
+                    header={this.state.question.header} 
+                    subHeader={this.state.question.subHeader} 
+                />
             </div>
         )
     }
