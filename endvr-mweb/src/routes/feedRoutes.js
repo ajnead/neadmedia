@@ -5,7 +5,7 @@ import Get from '../utilities/api/get';
 class FeedRoutes {
 
     constructor(){
-        this._route = Configs.endvrApiUrl + 'feed/';
+        this._route = Configs.endvrApiUrl + 'discovery/';
     }
 
     set returnParam(val){
@@ -16,9 +16,9 @@ class FeedRoutes {
         return this._returnParam;
     }
 
-    getFeed(start,stop,type,feedId,callback){
-        const url = this._route + start + '/' + stop + '/' + type + '/' + feedId + '?' + originTracer();
-        const get = new Get('feedRoutes-getFeed',url,()=>{
+    getFeed(start,stop,pageSize,callback){
+        const url = this._route + start + '/' + stop + '/' + pageSize + '?' + originTracer();
+        const get = new Get('feedRoutes-getDiscoveryHomd',url,()=>{
             this.returnParam = get;
             callback();
         });

@@ -10,11 +10,10 @@ class HomeContainer extends React.Component {
         super(props);
         
         this.state = {
-            feedType: 'all',
-            feedId: 1,
             start: 0,
             stop: 100,
-            feed: []
+            pageSize: 25,
+            feedChildren: []
         }
     }
 
@@ -25,13 +24,13 @@ class HomeContainer extends React.Component {
     loadFeed(){
         const state = this.state;
         const feedRoutes = new FeedRoutes();
-        feedRoutes.getFeed(state.start,state.stop,state.feedType,state.feedId,()=>{
+        feedRoutes.getFeed(state.start,state.stop,state.pageSize,()=>{
             const response = feedRoutes.returnParam;
             const status = response.metadata.status;
 
             if(status==="success"){
                 this.setState({
-                    feed: response.payload.feedLines
+                    feedChildren: response.payload.feedChildren
                 })
             }
         });
@@ -40,17 +39,17 @@ class HomeContainer extends React.Component {
     render(){
         var CardSwitch = (props) => {
             switch(props.cardType){
-                case 'parent': return <ParentCard parentInstanceId={props.feed.feedLineId} />
-                case 'discovery': return <DiscoveryCard feed={props.feed} />
-                case 'question': return <QuestionCard feed={props.feed} />
+                case 'parent': return <ParentCard parentInstanceId={props.feedChildren.feedChildInstanceId} />
+                case 'discovery': return <DiscoveryCard feedChildren={props.feedChildren} />
+                case 'question': return <QuestionCard feedChildren={props.feedChildren} />
                 default: return <span></span>
              }
         }
 
         return(
             <div className="home-container">
-                {this.state.feed.map((feed,i)=>(
-                    <CardSwitch key={i} cardType = {feed.feedLineType} feed={feed} />
+                {this.state.feedChildren.map((feedChildren,i)=>(
+                    <CardSwitch key={i} cardType = {feedChildren.feedChildType} feedChildren={feedChildren} />
                 ))}
             </div>
         )

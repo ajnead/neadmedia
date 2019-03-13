@@ -252,6 +252,12 @@ button{
 .font-h8{
     font-size: 12px;
 }
+.font-h9{
+    font-size: 11px;
+}
+.font-h10{
+    font-size: 10px;
+}
 .font-weight-600{
     font-weight: 600;
 }
@@ -269,6 +275,9 @@ button{
 }
 .pointer{
     cursor: pointer;
+}
+.height-100{
+    height: 100%;
 }
 
 /*generic reusable styles*/
@@ -564,13 +573,17 @@ button{
     border: 2px solid var(--secondary-color) !important;
     cursor: pointer;
 }
-
+.card-shadow{
+    box-shadow: 0 4px 2px -2px #000;
+}
+.card-alt-background{
+    background: rgba(0, 0, 0, 0.075)
+}
 
 /*sku modal*/
 .sku-modal-view{
-    width: 100vw;
     height: calc(100vh - 100px);
-    overflow-x: none;
+    overflow-x: hidden;
     overflow-y: auto;
     box-sizing: content-box;
 }

@@ -6,6 +6,7 @@ class RelationshipRoutes {
 
     constructor(){
         this._routeParent = Configs.endvrApiUrl + 'relationship/parent/';
+        this._routeCollection = Configs.endvrApiUrl + 'relationship/collection/';
     }
 
     set returnParam(val){
@@ -19,6 +20,15 @@ class RelationshipRoutes {
     getParent(parentInstanceId,callback){
         const url = this._routeParent + parentInstanceId + '?' + originTracer();
         const get = new Get('relationshipRoutes-getParent',url,()=>{
+            this.returnParam = get;
+            callback();
+        });
+        get.execute();    
+    }
+
+    getCollection(collectionInstanceId,callback){
+        const url = this._routeCollection + collectionInstanceId + '?' + originTracer();
+        const get = new Get('relationshipRoutes-getCollection',url,()=>{
             this.returnParam = get;
             callback();
         });

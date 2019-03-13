@@ -1,6 +1,8 @@
 import React from 'react';
-import { Input } from 'reactstrap';
+import { Input, Row, Col } from 'reactstrap';
 import Routes from '../components/navigation/routes';
+import RelationshipRoutes from '../routes/relationshipRoutes';
+import ParentSearchResult from '../models/discovery/parentSearchResult';
 
 class DiscoveryContainer extends React.Component {
 
@@ -8,12 +10,17 @@ class DiscoveryContainer extends React.Component {
         super(props);
 
         this.state = {
-            query: ''
+            query: '',
+            queryResults: []
         }
 
         this.changeValue = this.changeValue.bind(this);
         this.checkEnter = this.checkEnter.bind(this);
         this.getSearch = this.getSearch.bind(this);
+    }
+
+    componentDidMount(){
+        this.getCollection("col-1-2");
     }
 
     changeValue(event,id){
@@ -56,6 +63,49 @@ class DiscoveryContainer extends React.Component {
         }
     }
 
+    getCollection(collectionInstanceId){
+        const relationshipRoutes = new RelationshipRoutes();
+        relationshipRoutes.getCollection(collectionInstanceId,()=>{
+            const response = relationshipRoutes.returnParam;
+            const status = response.metadata.status;
+
+            if(status==="success"){
+                this.breakArrayIntoManyArrays(response.payload.collectionChildren,2);
+                this.setState({
+                    query: response.payload.collectionName
+                })
+            }
+        });
+    }
+
+    breakArrayIntoManyArrays(arr,countObjPerChildArray){
+        var rows = Math.ceil(arr.length / countObjPerChildArray);
+        var newArr = [];
+        for(var row = 0; row < rows; row++){
+            var childArr = [];    
+            var min = row * countObjPerChildArray;
+            var max = (min + countObjPerChildArray);
+            
+            for(var k = min; k < max; k++){
+                childArr.push(arr[k]);
+            }
+            
+            newArr.push(
+                <Row key={row} className="padding-0 margin-left-0 margin-right-0">
+                    {childArr.map((r,i)=>(
+                        <Col key={i} className="padding-0">
+                            <ParentSearchResult parentInstanceId={r.childTypeInstanceId} />
+                        </Col>
+                    ))}
+                </Row>
+            );
+        }
+
+        this.setState({
+            queryResults: newArr,
+        })
+    }
+
     render(){
         return(
             <div className="discovery-container">
@@ -67,10 +117,7 @@ class DiscoveryContainer extends React.Component {
                         onKeyDown={this.checkEnter} />
                 </div>
                 <div className="discovery-list">
-
-                </div>
-                <div className="discovery-relationships">
-
+                    {this.state.queryResults}
                 </div>
             </div>
         )
