@@ -18,7 +18,7 @@ const Pill = (props) => {
     }
 
     return(
-        <div className = {'e-pill' + isPrimary + className}>
+        <div className = {'e-pill font-h8' + isPrimary + className}>
             {text}
         </div>
     )

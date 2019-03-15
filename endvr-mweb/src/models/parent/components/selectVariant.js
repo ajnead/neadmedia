@@ -14,7 +14,8 @@ class SelectVariant extends React.Component {
             variantsPerRow: 4,
             variantRowsForDisplay: null,
             variantsOpen: true,
-            selectedValueForDisplay: 'Choose an option'
+            selectedValueForDisplay: 'Choose an option',
+            isThumbnailOrSwatchVariant: false
         }
 
         this.toggle = this.toggle.bind(this);
@@ -32,6 +33,7 @@ class SelectVariant extends React.Component {
             selected: selected
         },()=>{
             this.loadVariant();
+            this.toggleCloseOnVariantSelected();
         })
     }
 
@@ -53,6 +55,14 @@ class SelectVariant extends React.Component {
                 if(this.state.attributeId>0){
                     this.loadVariant();
                 }   
+            })
+        }
+    }
+
+    toggleCloseOnVariantSelected(){
+        if(!this.state.variant.loadSwatch && !this.state.variant.loadThumbnail){
+            this.setState({
+                variantsOpen: false
             })
         }
     }
@@ -97,6 +107,7 @@ class SelectVariant extends React.Component {
 
             //builld the variant display
             var variantRowsForDisplay = [];
+
             for(var r = 0; r < numOfRows; r++){
                 var variantsForThisRow = [];
                 var min = r * valuesPerRow;
@@ -132,7 +143,10 @@ class SelectVariant extends React.Component {
                                         ) 
                                         :(
                                             <CardBody className="card-button-font" onClick={()=>this.changeSelected(val.parentAttributeValueId)}>
-                                                {val.attributeValue}
+                                                {val.attributeValue.length>4  
+                                                    ? <span className="font-h8">{val.attributeValue}</span>
+                                                    : <span>{val.attributeValue}</span>
+                                                }
                                             </CardBody>
                                         )
                                     }                                

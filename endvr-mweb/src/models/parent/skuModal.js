@@ -3,8 +3,8 @@ import { Row, Col } from 'reactstrap';
 import { Card, CardBody, CardTitle, CardText, CardImg, Button } from 'reactstrap';
 import { Nav, NavItem } from 'reactstrap';
 import Configs from '../../configs/configs';
-import SelectVariant from '../parent/components/selectVariant';
-import DisplayCollections from '../parent/components/displayCollections';
+import SelectVariant from './components/selectVariant';
+import DisplayCollections from './components/displayCollections';
 
 class SkuModal extends React.Component {
 
@@ -107,8 +107,6 @@ class SkuModal extends React.Component {
             this.setState({
                 imageSrc: imageFeed,
                 imageHash: this.props.imageHash
-            },()=>{
-                console.log(this.state);
             })
         }
     }

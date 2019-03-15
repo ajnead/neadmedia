@@ -4,6 +4,7 @@ import DiscoveryContainer from '../../containers/discoveryContainer';
 import AssistantContainer from '../../containers/assistantContainer';
 import RequestHistoryContainer from '../../containers/requestHistoryContainer';
 import QuestionsContainer from '../../containers/questionsContainer';
+import CollectionContainer from '../../containers/collectionContainer';
 
 const Routes = [
     {
@@ -59,6 +60,14 @@ const Routes = [
         navName : "Questions",
         path : "/questions",
         component : QuestionsContainer,
+        isShown : false,
+        iconName : "",
+        headerType: "none"
+    },
+    {
+        navName : "Collections",
+        path : "/collections",
+        component : CollectionContainer,
         isShown : false,
         iconName : "",
         headerType: "none"

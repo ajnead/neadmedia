@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, CardBody, CardText, CardImg } from 'reactstrap';
 import Configs from '../../configs/configs';
 import RelationshipRoutes from '../../routes/relationshipRoutes';
+import Modal from '../../components/display/modal';
+import SkuModal from '../parent/skuModal';
 
 class ParentSearchResult extends React.Component {
     
@@ -15,7 +17,11 @@ class ParentSearchResult extends React.Component {
             title: '',
             description: '', 
             brand:  '',
+            parent: {},
+            skuComponent: <SkuModal parent={{}} parentInstanceId={''} />
         }
+
+        this.toggleModal = this.toggleModal.bind(this);
     }
 
     componentDidMount(){
@@ -36,6 +42,15 @@ class ParentSearchResult extends React.Component {
         }
     }
 
+    toggleModal(){
+        const component = <SkuModal parent={this.state.parent} parentInstanceId={this.state.parentInstanceId} imageHash={this.state.imageHash} />;
+        this.setState({
+            skuComponent: component
+        },()=>{
+            this.refs.skuModal.open();
+        })
+    }
+
     loadParent(){
         const relationshipRoutes = new RelationshipRoutes();
         relationshipRoutes.getParent(this.state.parentInstanceId,()=>{
@@ -51,7 +66,7 @@ class ParentSearchResult extends React.Component {
                     src: image.imageHash + ".feed." + image.formatType,
                     thumbnail: image.imageHash + ".150." + image.formatType,
                     hash: image.imageHash,
-                    main: image.imageHash + "." + image.formatType,
+                    main: image.imageHash + "." + image.formatType
                 }
 
                 images.push(imageObj);
@@ -65,15 +80,15 @@ class ParentSearchResult extends React.Component {
                 }
             }
 
-            var image = images[0].main;
-
             if(status==="success"){
                 this.setState({
                     images: images,
-                    image: image,
+                    image: images[0].main,
+                    imageHash: images[0].hash,
                     title: title,
                     brand: brand,
-                    description: description
+                    description: description,
+                    parent: response.payload,
                 })
             }
         })
@@ -81,13 +96,19 @@ class ParentSearchResult extends React.Component {
 
     render(){
         return(
+            <span>
             <Card className="height-100">
                 <CardBody>
-                    <CardImg src={Configs.collectionsImagesUrl + this.state.image} />
+                    <CardImg src={Configs.collectionsImagesUrl + this.state.image} onClick={this.toggleModal} />
                     <CardText className="font-h10 text-muted padding-0 margin-0">Nike</CardText>
                     <CardText className="font-h9 padding-0 margin-0">{this.state.title}</CardText>
                 </CardBody>
             </Card>
+            <Modal 
+                ref="skuModal" 
+                component={this.state.skuComponent} 
+            />
+            </span>
             
         )
     }

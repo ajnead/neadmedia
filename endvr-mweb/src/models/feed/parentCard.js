@@ -18,9 +18,7 @@ class ParentCard extends React.Component {
                 { src: '81b0ef55d92527af53b4c52989b6ecacd07f5347.feed.jpg', thumbnail: '81b0ef55d92527af53b4c52989b6ecacd07f5347.150.jpg' }
             ],
             parentInstanceId: '',
-            parent: {
-                
-            },
+            parent: {},
             title: '',
             description: '', 
             brand:  '',
