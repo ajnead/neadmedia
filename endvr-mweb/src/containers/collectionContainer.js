@@ -16,30 +16,34 @@ class CollectionContainer extends React.Component {
             collectionOptions: [
                 {
                     "collectionName": "Nike Flyknit",
-                    "imageUrl": "",
-                    "collectionInstanceId": "col-1-2"
+                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/ef0d22202bd9d4b7481eac1dcdeff420614e515b.150.jpg",
+                    "collectionInstanceId": "col-1-2",
+                    "active": ''
                 },
                 {
                     "collectionName": "Nike React",
-                    "imageUrl": "",
-                    "collectionInstanceId": "col-2-1"
+                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/79987cd592e8ac00e6cc804866da5b56fe3227bf.150.jpg",
+                    "collectionInstanceId": "col-2-1",
+                    "active": ''
                 },
                 {
                     "collectionName": "Air Jordan",
-                    "imageUrl": "",
-                    "collectionInstanceId": "col-1-5"
+                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/d8d635c87136bc33515a9b6491316122fff849a0.150.jpg",
+                    "collectionInstanceId": "col-1-5",
+                    "active": ''
                 },
                 {
                     "collectionName": "Nike Odessey",
-                    "imageUrl": "",
-                    "collectionInstanceId": "col-2-1"
+                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/79987cd592e8ac00e6cc804866da5b56fe3227bf.150.jpg",
+                    "collectionInstanceId": "col-2-2",
+                    "active": ''
                 },
                 {
                     "collectionName": "Air Max",
-                    "imageUrl": "",
-                    "collectionInstanceId": "col-1-2"
+                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/79987cd592e8ac00e6cc804866da5b56fe3227bf.150.jpg",
+                    "collectionInstanceId": "col-1-3",
+                    "active": ''
                 }
-
             ]
         }
 
@@ -74,8 +78,19 @@ class CollectionContainer extends React.Component {
 
             if(status==="success"){
                 this.breakArrayIntoManyArrays(response.payload.collectionChildren,2);
+
+                var cOptions = this.state.collectionOptions;
+                for(var cOptionsObj of cOptions){
+                    cOptionsObj.active = "";
+                    if(cOptionsObj.collectionInstanceId==this.state.collectionInstanceId){
+                        cOptionsObj.active = 'active';
+                    }
+                }
+                
+
                 this.setState({
-                    query: response.payload.collectionName
+                    query: response.payload.collectionName,
+                    collectionOptions: cOptions
                 })
             }
         });
@@ -121,7 +136,7 @@ class CollectionContainer extends React.Component {
                                 <Col key={i} className="padding-top-5  margin-bottom-5" onClick={()=>this.changeCollection(opt.collectionInstanceId)}>
                                     <div>
                                         <div className="collection-icon-scrolling">
-                                            <img src = "/nike.svg" />
+                                            <img className={"width-inherit height-inherit padding-5 collection-border " + opt.active} src = {opt.imageUrl} />
                                         </div>
                                     </div>
                                     <div className="width-100 text-align-center">
