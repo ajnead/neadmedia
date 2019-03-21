@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Card, CardBody, CardText, CardImg } from 'reactstrap';
 import Configs from '../../../configs/configs';
+import ArrayHelpers from '../../../utilities/helpers/arrayHelpers';
 
 class SelectVariant extends React.Component {
 
@@ -68,10 +69,13 @@ class SelectVariant extends React.Component {
     }
 
     loadVariant(){
-        const variantsValues = this.state.variant.parentAttributeValues;
+        var variantsValues = this.state.variant.parentAttributeValues;
         
         var variantRowsForDisplay = [];
         if(variantsValues!==null&&variantsValues!==undefined){
+            const arrayHelpers = new ArrayHelpers();
+            variantsValues = arrayHelpers.sortByKey(variantsValues,"attributeOrder");
+             
             const numOfValues = variantsValues.length;  
             var valuesPerRow = this.state.variantsPerRow;
             const numOfRows = Math.ceil(numOfValues / valuesPerRow);
