@@ -1,0 +1,7 @@
+*/.*
+*/./*
+*.class
+[Tt]humbs.db
+*.DS_Store
+*/target/*
+*/node_modules/*
