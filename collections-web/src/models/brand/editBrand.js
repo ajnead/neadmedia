@@ -6,6 +6,7 @@ import BrandRoutes from '../../controllers/brandRoutes';
 import InputText from '../../components/inputs/inputText';
 import InputTextNoLabel from '../../components/inputs/inputTextNoLabel';
 import NonInput from '../../components/display/nonInput';
+import PopUp from '../../components/display/popup';
 import OptionDisplay from '../../components/cards/optionDisplay';
 
 class EditBrand extends React.Component {
@@ -149,6 +150,7 @@ class EditBrand extends React.Component {
     }
     
     addCollection(){
+        this.refs.popup.toggle();
         console.log('add collection coming soon');
     }
 
@@ -342,6 +344,7 @@ class EditBrand extends React.Component {
                             <div className="add-bttn-35-35 float-left margin-left-10">
                                 <div className="icon-add" onClick={this.addCollection}></div>
                             </div>
+                            <PopUp ref="popup" title={'Add Brand Collection'} />
                         </div>
                         <Row>
                             <Col><DisplayCollectionsCards collectionsList={this.state.leftCollection} /></Col>

@@ -28,7 +28,7 @@ class GetBrands extends React.Component {
 
     componentDidMount(){
         this.loadInitialBrands();
-        //this.openEdit(1);
+        this.openEdit(1);
     }
 
     loadInitialBrands(){

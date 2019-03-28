@@ -432,9 +432,6 @@ a.alt{
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.125);   
 }
-.modal-header{
-    background-color: #18BC9C !important;
-}
 .display-none{
   display: none !important;
 }
@@ -693,4 +690,14 @@ a.alt{
 .card-list-image{
   width: 150px;
   height: 150px;
+}
+
+/*override bootstap modal*/
+.modal-content{
+  border-radius: 0px !important;
+}
+.modal-header{
+  background-color: #18BC9C !important;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
 }
