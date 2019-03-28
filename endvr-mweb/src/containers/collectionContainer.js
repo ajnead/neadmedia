@@ -15,33 +15,27 @@ class CollectionContainer extends React.Component {
             queryResults: [],
             collectionOptions: [
                 {
-                    "collectionName": "Nike Flyknit",
-                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/ef0d22202bd9d4b7481eac1dcdeff420614e515b.150.jpg",
-                    "collectionInstanceId": "col-1-2",
+                    "collectionName": "Flyknit",
+                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/163ac482c9f660a5bd3db814664bc0ec43f01964.150.jpg",
+                    "collectionInstanceId": "col-1-1",
                     "active": ''
                 },
                 {
-                    "collectionName": "Nike React",
-                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/79987cd592e8ac00e6cc804866da5b56fe3227bf.150.jpg",
-                    "collectionInstanceId": "col-2-1",
+                    "collectionName": "React",
+                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/8e87896cfd8249b97e064d076442b1a9434d1186.150.jpg",
+                    "collectionInstanceId": "col-1-4",
                     "active": ''
                 },
                 {
-                    "collectionName": "Air Jordan",
-                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/d8d635c87136bc33515a9b6491316122fff849a0.150.jpg",
-                    "collectionInstanceId": "col-1-5",
-                    "active": ''
-                },
-                {
-                    "collectionName": "Nike Odessey",
-                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/79987cd592e8ac00e6cc804866da5b56fe3227bf.150.jpg",
-                    "collectionInstanceId": "col-2-2",
+                    "collectionName": "Air Zoom",
+                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/1701c2d5b5401bf845ec631250040626eefd61bf.150.jpg",
+                    "collectionInstanceId": "col-2-4",
                     "active": ''
                 },
                 {
                     "collectionName": "Air Max",
-                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/79987cd592e8ac00e6cc804866da5b56fe3227bf.150.jpg",
-                    "collectionInstanceId": "col-1-3",
+                    "imageUrl": "https://collectionsimg.blob.core.windows.net/images/c2da27f68c16cbd4d8d60a4a447c54ca17de5362.150.jpg",
+                    "collectionInstanceId": "col-3-4",
                     "active": ''
                 }
             ]

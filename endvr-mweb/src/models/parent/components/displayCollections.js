@@ -35,10 +35,10 @@ class DisplayCollections extends React.Component {
                 <div className="divider secondary"></div>
                 <div className="margin-top-10">
                     <div className={this.state.isOpen ? 'display-block' : 'display-none'}>
-                        <Pill text={'Top Running Shoes'} isLink={true} to={'/collections?collectionInstanceId=col-1-2'}></Pill>
-                        <Pill text={'Nike Top 100'} isLink={true} to={'/collections?collectionInstanceId=col-2-1'} ></Pill>
-                        <Pill text={'Top 1000 Shoes'} isLink={true} to={'/collections?collectionInstanceId=col-1-5'} ></Pill>
-                        <Pill text={'My Favorites'} isLink={true} to={'/collections?collectionInstanceId=col-1-2'} isSecondary={true}></Pill>
+                        <Pill text={'Top Running Shoes'} isLink={true} to={'/collections?collectionInstanceId=col-1-1'}></Pill>
+                        <Pill text={'Nike React'} isLink={true} to={'/collections?collectionInstanceId=col-1-4'} ></Pill>
+                        <Pill text={'Nike Air Zoom'} isLink={true} to={'/collections?collectionInstanceId=col-2-4'} ></Pill>
+                        <Pill text={'My Favorites'} isLink={true} to={'/collections?collectionInstanceId=col-1-1'} isSecondary={true}></Pill>
                     </div>
                 </div>
             </CardBody>
