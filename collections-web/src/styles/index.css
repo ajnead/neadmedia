@@ -474,13 +474,6 @@ a.alt{
   background: url('../assets/icon-exit.svg') no-repeat;
   z-index: 1000001;
 }
-.modal-exit{
-  width: 30px;
-  height: 30px;
-  margin-right: 5px;
-  cursor: pointer;
-  background: url('../assets/icon-exit.svg') no-repeat;
-}
 .pullup-display{
   margin-top: 30px;
 }
@@ -700,4 +693,11 @@ a.alt{
   background-color: #18BC9C !important;
   border-top-left-radius: 0px !important;
   border-top-right-radius: 0px !important;
+}
+.modal-exit{
+  width: 30px;
+  height: 30px;
+  margin-right: 0px;
+  cursor: pointer;
+  background: url('../assets/icon-exit.svg') no-repeat;
 }

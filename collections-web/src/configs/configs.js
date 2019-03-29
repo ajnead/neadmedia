@@ -8,7 +8,7 @@ const Configs = {
 */
 
 const Configs = {
-    collectionApiUrl : "http://devo.neadmedia.com:5000/collections/api/private",
+    collectionApiUrl : "http://localhost/collections/api/private",
     imageUrl: "https://collectionsimg.blob.core.windows.net/images/",
     logosUrl: "https://collectionsimg.blob.core.windows.net/logos/"
 }

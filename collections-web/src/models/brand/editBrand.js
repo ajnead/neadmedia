@@ -8,6 +8,7 @@ import InputTextNoLabel from '../../components/inputs/inputTextNoLabel';
 import NonInput from '../../components/display/nonInput';
 import PopUp from '../../components/display/popup';
 import OptionDisplay from '../../components/cards/optionDisplay';
+import AddBrandCollection from './addBrandCollection';
 
 class EditBrand extends React.Component {
 
@@ -29,13 +30,14 @@ class EditBrand extends React.Component {
             },
             newSynonym: '',
             rightCollection: [],
-            leftCollection: []
+            leftCollection: [],
         }
 
         this.deleteSynonym = this.deleteSynonym.bind(this);
         this.addSynonym = this.addSynonym.bind(this);
         this.addCollection = this.addCollection.bind(this);
         this.deleteCollection = this.deleteCollection.bind(this);
+        this.addCollectionSuccess = this.addCollectionSuccess.bind(this);
     }
 
     componentDidMount(){
@@ -154,6 +156,11 @@ class EditBrand extends React.Component {
         console.log('add collection coming soon');
     }
 
+    addCollectionSuccess(){
+        this.refs.popup.toggle();
+        this.loadBrand();
+    }
+
     deleteCollection(brandCollectionId){
        console.log(brandCollectionId);
     }
@@ -172,8 +179,8 @@ class EditBrand extends React.Component {
                                         <div className="icon-trash-can" onClick={()=>this.deleteCollection(c.brandCollectionId)}></div>
                                     </div>
                                 </CardTitle>
-                                {c.collectionDescription!=null ? <CardSubtitle>c.collectionDescription</CardSubtitle> : <span></span>}
-                                <Row>
+                                {c.collectionDescription!=null ? <CardSubtitle>{c.collectionDescription}</CardSubtitle> : <span></span>}
+                                <Row className="margin-top-5">
                                     <Col>
                                         <OptionDisplay name={"Brand Collection ID"} value={c.brandCollectionId} />        
                                     </Col>
@@ -344,7 +351,7 @@ class EditBrand extends React.Component {
                             <div className="add-bttn-35-35 float-left margin-left-10">
                                 <div className="icon-add" onClick={this.addCollection}></div>
                             </div>
-                            <PopUp ref="popup" title={'Add Brand Collection'} />
+                            <PopUp ref="popup" title={'Add Brand Collection'} component={<AddBrandCollection close={this.addCollectionSuccess} brandId={this.state.brandId} />}/>
                         </div>
                         <Row>
                             <Col><DisplayCollectionsCards collectionsList={this.state.leftCollection} /></Col>

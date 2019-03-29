@@ -77,6 +77,15 @@ class BrandRoutes {
         });
         del.execute();
     }
+
+    putBrandCollectionNew(collectionJson,brandId,callback){
+        const url = this._route + 'collection/' + brandId + '/0/write?' + originTracer();
+        const put = new Put('brandRoutes-putBrandCollectionNew',url,collectionJson,()=>{
+            this.returnParam = put;
+            callback();
+        });
+        put.execute();
+    }
 }
 
 export default BrandRoutes;

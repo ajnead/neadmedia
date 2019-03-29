@@ -22,7 +22,6 @@ class PopUp extends React.Component {
         }
     }
 
-
     toggle(){
         this.setState({
             open: !this.state.open
