@@ -9,7 +9,7 @@ class AddBrandCollextion extends React.Component {
         super(props);
 
         this.state = {
-            collectionType: "",
+            collectionType: "style",
             collectionName: "",
             collectionDescription: "",
             imageUrl: "",
@@ -24,10 +24,6 @@ class AddBrandCollextion extends React.Component {
             brandId: props.brandId
         }
     }
-
-    toggle(){
-        this.refs.popup.toggle();
-    } 
 
     changeValue(event,id){
         this.setState({
@@ -99,7 +95,7 @@ class AddBrandCollextion extends React.Component {
                 />
                 <Row className="margin-top-10">
                     <Col>
-                        <Button className="bg-color-second no-border" block onClick={this.add} >Add Brand Collection</Button>
+                        <Button className="bg-color-second no-border" block onClick={this.add}>Add</Button>
                     </Col>
                 </Row>
             </div>

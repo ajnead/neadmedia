@@ -13,7 +13,7 @@ class ModalPage extends Component {
         this.exit = this.exit.bind(this);
     }
 
-    open(){
+    open(callback){
         var pullUpType = "pullup-edit";
         if(this.props.pullUpType==="view"){
             pullUpType = "pullup-view";
@@ -23,6 +23,10 @@ class ModalPage extends Component {
             headerColor: pullUpType,
             open: 'display-block'
         })
+
+        if(callback!==undefined&&callback!==null){
+            callback();
+        }
     }
 
     exit(){

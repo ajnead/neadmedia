@@ -48,6 +48,12 @@ const NavRoutes = [
                 navName : "Crawler",
                 defaultPath: "/mappings",
                 component: CrawlerContainer
+            },
+            {
+                path : "/collections",
+                navName : "Collections",
+                defaultPath: "",
+                component: DefaultView
             }
         ]
     },

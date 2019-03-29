@@ -9,6 +9,7 @@ import NonInput from '../../components/display/nonInput';
 import PopUp from '../../components/display/popup';
 import OptionDisplay from '../../components/cards/optionDisplay';
 import AddBrandCollection from './addBrandCollection';
+import AddBrandCollectionAttribute from './addBrandCollectionAttribute';
 
 class EditBrand extends React.Component {
 
@@ -26,11 +27,13 @@ class EditBrand extends React.Component {
                 brandClass: '',
                 brandStatus: '',
                 brandLogoUrl: '',
-                brandSynonyms: []
+                brandSynonyms: [],
+                brandCollections: []
             },
             newSynonym: '',
             rightCollection: [],
             leftCollection: [],
+            bcaComponent: <AddBrandCollectionAttribute />
         }
 
         this.deleteSynonym = this.deleteSynonym.bind(this);
@@ -38,7 +41,17 @@ class EditBrand extends React.Component {
         this.addCollection = this.addCollection.bind(this);
         this.deleteCollection = this.deleteCollection.bind(this);
         this.addCollectionSuccess = this.addCollectionSuccess.bind(this);
+        this.addCollectionAttribute = this.addCollectionAttribute.bind(this);
+        this.addCollectionAttributeSuccess = this.addCollectionAttributeSuccess.bind(this);
     }
+
+    /*
+    static getDerivedStateFromProps(props){  
+        return{
+            brandId: props.brandId
+        }
+    }
+    */
 
     componentDidMount(){
         this.setState({
@@ -58,37 +71,44 @@ class EditBrand extends React.Component {
         }
     }
 
+    load(){
+        this.loadBrand();
+    }
+
     loadBrand(){
         if(this.state.brandId!==0){
             const brandRoutes = new BrandRoutes();
             brandRoutes.getBrand(this.state.brandId,()=>{
                 const response = brandRoutes.returnParam;
                 const status = response.metadata.status;
-
-                var left = [];
-                var right = [];
-                var isLeft = true;
-                if(response.payload.brandCollections!=null){
-                    for(var obj of response.payload.brandCollections){
-                        if(isLeft){
-                            left.push(obj);
-                            isLeft = false;
-                        }else{
-                            right.push(obj);
-                            isLeft = true;
-                        }
-                    }
-                }
-
+                
                 if(status==="success"){
-                    this.setState({
-                        brandObj: response.payload,
-                        rightCollection: right,
-                        leftCollection: left
-                    })
+                    this.processCollections(response.payload);
                 }
             })
         }
+    }
+    processCollections(brandObj){
+        var left = [];
+        var right = [];
+        var isLeft = true;
+        if(brandObj.brandCollections!=null){
+            for(var obj of brandObj.brandCollections){
+                if(isLeft){
+                    left.push(obj);
+                    isLeft = false;
+                }else{
+                    right.push(obj);
+                    isLeft = true;
+                }
+            }
+        }
+
+        this.setState({
+            brandObj: brandObj,
+            rightCollection: right,
+            leftCollection: left
+        })
     }
 
     changeValue(event,id){
@@ -153,7 +173,6 @@ class EditBrand extends React.Component {
     
     addCollection(){
         this.refs.popup.toggle();
-        console.log('add collection coming soon');
     }
 
     addCollectionSuccess(){
@@ -162,7 +181,41 @@ class EditBrand extends React.Component {
     }
 
     deleteCollection(brandCollectionId){
-       console.log(brandCollectionId);
+        const brandRoutes = new BrandRoutes();
+        brandRoutes.deleteBrandCollection(brandCollectionId,this.state.brandId,()=>{
+            const response = brandRoutes.returnParam;
+            const status = response.metadata.status;
+
+            if(status==="success"){
+                var brandObj = this.state.brandObj;
+                var bcArr = brandObj.brandCollections;
+                
+                for(var i =0; i<bcArr.length; i++){
+                    var bcObj = bcArr[i];
+                    if(brandCollectionId===bcObj.brandCollectionId){
+                        bcArr.splice(i,1);
+                        break;
+                    }
+                }
+
+                brandObj.brandCollections = bcArr;
+                this.processCollections(brandObj);
+            }
+        });
+    }
+
+    addCollectionAttribute(brandCollectionId){
+        var bcaComponent = <AddBrandCollectionAttribute brandCollectionId={brandCollectionId} brandId={this.state.brandId} close={this.addCollectionAttributeSuccess} />;
+        this.setState({
+            bcaComponent: bcaComponent
+        },()=>{
+            this.refs.popupCollectionAttr.toggle();
+        })
+    }
+
+    addCollectionAttributeSuccess(){
+        this.refs.popupCollectionAttr.toggle();
+        this.loadBrand();
     }
 
     render(){
@@ -215,7 +268,7 @@ class EditBrand extends React.Component {
                                         Add new Collection Attribute
                                     </div>
                                     <div className = "float-left margin-left-5 add-bttn-20-20 padding-top-0">
-                                        <div className="icon-add"></div>
+                                        <div className="icon-add" onClick={()=>this.addCollectionAttribute(c.brandCollectionId)}></div>
                                     </div>
                                 </div>
                             </CardBody>
@@ -309,7 +362,7 @@ class EditBrand extends React.Component {
                 </Row>
                 <Row className="margin-top-10">
                     <Col xs={{ size: 6, offset: 3}}>
-                        <Button className="bg-color-second no-border" block >Update Brand</Button>
+                        <Button className="bg-color-second no-border" block disabled>Update Brand</Button>
                     </Col>
                 </Row>
                 <Row className="margin-top-10">
@@ -334,7 +387,6 @@ class EditBrand extends React.Component {
                                             value={this.state.newSynonym}
                                             onChange={event => this.changeValue(event,"newSynonym")}
                                         />
-                                        
                                     </div>
                                     <div className = "float-left margin-left-5 add-bttn-30-30 padding-top-0">
                                         <div className="icon-add" onClick={this.addSynonym}></div>
@@ -352,6 +404,7 @@ class EditBrand extends React.Component {
                                 <div className="icon-add" onClick={this.addCollection}></div>
                             </div>
                             <PopUp ref="popup" title={'Add Brand Collection'} component={<AddBrandCollection close={this.addCollectionSuccess} brandId={this.state.brandId} />}/>
+                            <PopUp ref="popupCollectionAttr" title={'Add Brand Collection Attribute'} component={this.state.bcaComponent}/>
                         </div>
                         <Row>
                             <Col><DisplayCollectionsCards collectionsList={this.state.leftCollection} /></Col>

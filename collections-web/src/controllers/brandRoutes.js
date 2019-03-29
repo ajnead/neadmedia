@@ -86,6 +86,33 @@ class BrandRoutes {
         });
         put.execute();
     }
+
+    putBrandCollectionUpdate(collectionJson,brandId,brandCollectionId,callback){
+        const url = this._route + 'collection/' + brandId + '/' + brandCollectionId + '/write?' + originTracer();
+        const put = new Put('brandRoutes-putBrandCollectionUpdate',url,collectionJson,()=>{
+            this.returnParam = put;
+            callback();
+        });
+        put.execute();
+    }
+
+    deleteBrandCollection(brandCollectionId,brandId,callback){
+        const url = this._route + 'collection/' + brandId + '/' + brandCollectionId + '/delete?' + originTracer();
+        const del = new Delete('brandRoutes-deleteBrandCollection',url,null,()=>{
+            this.returnParam = del;
+            callback();
+        });
+        del.execute();
+    }
+
+    putBrandCollectionUpdateAttrNew(collectionJson,brandId,brandCollectionId,callback){
+        const url = this._route + 'collection/attribute/' + brandId + '/' + brandCollectionId + '/0/write?' + originTracer();
+        const put = new Put('brandRoutes-putBrandCollectionUpdateAttrNew',url,collectionJson,()=>{
+            this.returnParam = put;
+            callback();
+        });
+        put.execute();
+    }
 }
 
 export default BrandRoutes;

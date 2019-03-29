@@ -537,7 +537,7 @@ a.alt{
   box-shadow: none !important;
 }
 .rbt-input{
-  background-color: #f1f2f4 !important;
+  background-color: transparent !important;
   padding-bottom: 12px !important;
 }
 .input-text-line.non-input{
