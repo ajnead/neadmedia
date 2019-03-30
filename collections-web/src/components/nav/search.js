@@ -40,7 +40,7 @@ class Search extends React.Component {
         switch(autoLookupCheck){
            case 'trc-' : url = '/system/trace?traceId=' + search; break;
            case 'src-' : url = '/data/sources/data?sourceInstanceId=' + search; break;
-           case 'rrp-' : url = '/data/relationships/parent?parentInstanceId=' + search; break;
+           case 'rrp-' : url = '/data/relationships/parents?parentInstanceId=' + search; break;
         }
 
         const protocolPrefix = "page:";

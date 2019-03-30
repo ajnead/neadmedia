@@ -2,6 +2,7 @@ import DefaultView from "../defaultView";
 import AttributeContainer from "../../containers/attributeContainer";
 import BrandContainer from "../../containers/brandContainer";
 import FoundationContainer from "../../containers/foundationContainer";
+import CollectionContainer from "../../containers/collectionContainer";
 import MicroserviceContainer from "../../containers/microserviceContainer";
 import SourceContainer from "../../containers/sourceContainer";
 import SkuContainer from "../../containers/skuContainer";
@@ -50,10 +51,10 @@ const NavRoutes = [
                 component: CrawlerContainer
             },
             {
-                path : "/collections",
-                navName : "Collections",
+                path : "/collection",
+                navName : "Collection",
                 defaultPath: "",
-                component: DefaultView
+                component: CollectionContainer
             }
         ]
     },
@@ -79,7 +80,7 @@ const NavRoutes = [
             {
                 path : "/relationships",
                 navName : "Relationships",
-                defaultPath: "/parent",
+                defaultPath: "/parents",
                 component: RelationshipContainer
             }
         ]

@@ -12,6 +12,8 @@ import OptionDisplayList from '../../../components/cards/optionDisplayList';
 import PreviewJson from '../../../components/pullUp/previewJson';
 import PullUp from '../../../components/pullUp/pullUp';
 import ArrayHelpers from '../../../utilities/helpers/arrayHelpers';
+import getQueryParameter from '../../../utilities/url/getQueryParameter';
+import addQueryParameter from '../../../utilities/url/addQueryParameter';
 
 class GetParent extends React.Component {
 
@@ -30,7 +32,8 @@ class GetParent extends React.Component {
             attributeNames: null,
             variantAttributes: [],
             nonVariantAttributes: [],
-            loadState: "waitingQuery"
+            loadState: "waitingQuery",
+            parentInstanceIdSearch: ""
         }
 
         this.changeValue = this.changeValue.bind(this);
@@ -39,6 +42,22 @@ class GetParent extends React.Component {
         this.closePullUp = this.closePullUp.bind(this);
         this.loadParent = this.loadParent.bind(this);
         this.indexParent = this.indexParent.bind(this);
+    }
+
+    componentDidMount(){
+        setInterval(() => {
+            var queryParameter = getQueryParameter("parentInstanceId");
+            if(queryParameter!==undefined&&queryParameter!=null&&queryParameter.length>3){
+                if(this.state.parentInstanceIdSearch!==queryParameter){
+                    this.setState({
+                        parentInstanceIdSearch: queryParameter,
+                        parentInstanceId: queryParameter
+                    },()=>{
+                        this.loadParent();
+                    })
+                }
+            }
+        }, 100);
     }
 
     openPullUp(){
@@ -61,7 +80,7 @@ class GetParent extends React.Component {
 
     checkEnter(event){
         if(event.keyCode == 13){
-            this.loadParent();
+            addQueryParameter("parentInstanceId",this.state.parentInstanceId);
         }
     }
 

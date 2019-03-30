@@ -1,11 +1,10 @@
 import React from 'react';
-import { Container, Nav } from 'reactstrap';
+import { Nav, Container } from 'reactstrap';
 import ThirdNavLinks from '../components/nav/thirdNavLinks';
 import ThirdNavSwitch from '../components/nav/thirdNavSwitch';
-import GetParent from '../models/relationships/parent/getParent';
-import GetCollection from '../models/relationships/collection/getCollection';
+import DefaultView from '../components/defaultView'
 
-class RelationshipContainer extends React.Component {
+class CollectionContainer extends React.Component {
 
     constructor(props){
         super(props);
@@ -13,28 +12,27 @@ class RelationshipContainer extends React.Component {
         this.state = {
             navItems: [
                 {
-                    name: 'Parents',
-                    to: '/data/relationships/parents',
-                    component: GetParent
+                    name: 'Curation Rules',
+                    to: '/definitions/collection/curation',
+                    component: DefaultView
                 },
                 {
-                    name: 'Collections',
-                    to: '/data/relationships/collections',
-                    component: GetCollection
+                    name: 'Settings',
+                    to: '/definitions/collection/settings',
+                    component: DefaultView
                 }
-            ],
-            relationshipSearch: ""
+            ]
         }
     }
 
     render(){
         return(
-            <Container fluid>
-                <div className="third-nav">
+            <Container fluid className = "padding-top-10">
+            <div className="third-nav">
                     <div className="sidebar">
                         <Nav vertical>
                             {this.state.navItems.map((item, i) => {
-                            return <ThirdNavLinks key={i} item={item} parameter={this.state.skuInstanceId} />;
+                            return <ThirdNavLinks key={i} item={item} />;
                             })}
                         </Nav>
                     </div>
@@ -45,6 +43,7 @@ class RelationshipContainer extends React.Component {
             </Container>
         )
     }
+
 }
 
-export default RelationshipContainer;
+export default CollectionContainer;

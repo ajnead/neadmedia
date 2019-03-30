@@ -7,6 +7,8 @@ class RelationshipRoutes {
 
     constructor(){
         this._routeParent = Configs.collectionApiUrl + '/relationship/parent/';
+        this._routeUI = Configs.collectionApiUrl + '/relationship/ui/';
+        this._routeCollection = Configs.collectionApiUrl + '/relationship/collection/';
     }
 
     set returnParam(val){
@@ -17,9 +19,13 @@ class RelationshipRoutes {
         return this._returnParam;
     }
 
+    /**
+     * methods to control the parent access model 
+     */
+
     getParent(parentInstanceId,callback){
         var url = this._routeParent + parentInstanceId + '/index?viewType=all&' + originTracer();
-        const get = new Get('parent-details',url,()=>{
+        const get = new Get('parent-getParent',url,()=>{
             this.returnParam = get;
             callback();
         });
@@ -28,8 +34,34 @@ class RelationshipRoutes {
 
     putParentToIndex(parentInstanceId){
         var url = this._routeParent + parentInstanceId + '/index?' + originTracer();
-        const put = new Put('parent-index',url,null,null);
+        const put = new Put('parent-putParentToIndex',url,null,null);
         put.execute();
+    }
+
+    /**
+     * methods to control the parent access model 
+     */
+
+    getCollection(collectionInstanceId,callback){
+        var url = this._routeCollection + collectionInstanceId + '/index?viewType=all&' + originTracer();
+        const get = new Get('collection-getCollection',url,()=>{
+            this.returnParam = get;
+            callback();
+        });
+        get.execute();
+    }
+
+    /**
+     * methods that retrieve read only data required for the collection-ui 
+     */
+
+    getUiRelationshipsBySkuInstanceId(skuInstanceId,callback){
+        var url = this._routeUI + 'relationshipsBySkuInstanceId/' + skuInstanceId + '/query?viewType=all&' + originTracer();
+        const get = new Get('relationshipUI-getRelationshipsBySkuInstanceId',url,()=>{
+            this.returnParam = get;
+            callback();
+        });
+        get.execute();
     }
 }
 

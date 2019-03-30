@@ -6,8 +6,10 @@ import Moment from 'react-moment'
 import 'moment-timezone';
 import Configs from '../../configs/configs';
 import SkuRoutes from '../../controllers/skuRoutes';
+import RelationshipRoutes from '../../controllers/relationshipRoutes';
 import AttributeRoutes from '../../controllers/attributeRoutes';
 import OptionDisplay from '../../components/cards/optionDisplay';
+import OptionDisplayList from '../../components/cards/optionDisplayList';
 import PreviewJson from '../../components/pullUp/previewJson';
 import PullUp from '../../components/pullUp/pullUp';
 import InputSkuInstanceId from './filters/inputSkuInstanceId';
@@ -26,7 +28,12 @@ class SkuData extends React.Component {
                 attributeNames: null
             },
             openPullUp: false,
-            loadState: "waitingQuery"
+            loadState: "waitingQuery",
+            relationships: {
+                relationshipInstanceIds: [],
+                collectionSummaries: []
+            },
+            relationshipsDataAvailable: false
         }
 
         this.openPullUp = this.openPullUp.bind(this);
@@ -73,7 +80,8 @@ class SkuData extends React.Component {
 
     loadSku(){
         this.setState({
-            loadState: 'waitingResults'
+            loadState: 'waitingResults',
+            relationshipsDataAvailable: false
         })
 
         if(this.state.attributeNames==null){
@@ -98,6 +106,8 @@ class SkuData extends React.Component {
                 this.setState({
                     sku: payload,
                     loadState: 'success'
+                },()=>{
+                    this.loadRelationships();
                 })
             }else if(status==="not_found"){
                 this.setState({
@@ -106,6 +116,20 @@ class SkuData extends React.Component {
             }else{
                 this.setState({
                     loadState: "error"
+                })
+            }
+        });
+    }
+
+    loadRelationships(){
+        const relationshipRoutes = new RelationshipRoutes();
+        relationshipRoutes.getUiRelationshipsBySkuInstanceId(this.state.skuInstanceId,()=>{
+            var response = relationshipRoutes.returnParam;
+            var status = response.metadata.status;
+            if(status==="success"){
+                this.setState({
+                    relationships: response.payload,
+                    relationshipsDataAvailable: true
                 })
             }
         });
@@ -164,6 +188,7 @@ class SkuData extends React.Component {
                             <SkuImages />
                         </Col>
                     </Row>
+                    <SkuRelationships />
                     <Row className="margin-top-10">
                         <Col>
                             <h3 className="margin-top-0">Sources</h3>
@@ -178,7 +203,6 @@ class SkuData extends React.Component {
                                                     isLink={true} 
                                                     href={'/data/sources/data?sourceInstanceId=' + source.sourceInstanceId}/>
                                             </Col>
-                                            <Col><OptionDisplay name={"Source GUID"} value={source.sourceGuid} /></Col>
                                             <Col><OptionDisplay name={"Added On"} value={<Moment unix tx="America/New_York">{source.createDate / 1000}</Moment>} /></Col>
                                         </Row>
                                     ))}
@@ -212,13 +236,11 @@ class SkuData extends React.Component {
                                                 <Col><OptionDisplay name={"Source Attribute Status"} value={att.skuAttributeStatus} /></Col>
                                             </Row>
                                             <Row>
-                                            <Col><OptionDisplay name={"Source Attr GUID"} value={att.sourceAttributeGuid} /></Col>
                                                 <Col><OptionDisplay name={"Source Instance ID"} value={att.sourceInstanceId} /></Col>
                                                 <Col><OptionDisplay name={"Source Attribute ID"} value={att.sourceAttributeId} /></Col>
+                                                <Col><OptionDisplay name={"SKU Attribute ID"} value={att.skuAttributeId} /></Col>
                                             </Row>
                                             <Row>
-                                                <Col><OptionDisplay name={"SKU Attr GUID"} value={att.skuAttributeGuid} /></Col>
-                                                <Col><OptionDisplay name={"SKU Attribute ID"} value={att.skuAttributeId} /></Col>
                                                 <Col><OptionDisplay name={"Last Updated"} value={<Moment unix tx="America/New_York">{att.updateDate / 1000}</Moment>} /></Col>
                                             </Row>
                                         </CardBody>
@@ -251,6 +273,47 @@ class SkuData extends React.Component {
                     </CardGroup>
                 </Row>
             )
+        }
+
+        var SkuRelationships = () => {
+            if(this.state.relationshipsDataAvailable){
+                return(
+                    <Row className="margin-top-10">
+                        <Col>
+                            <h3 className="margin-top-0">Relationships</h3>
+                            <Card>
+                                <CardBody>
+                                    <Row className = "margin-bottom-10">
+                                        <Col>
+                                            <OptionDisplayList 
+                                                name={"Parent Instance IDs"} 
+                                                values={this.state.relationships.relationshipInstanceIds} 
+                                                isLink={true} 
+                                                href={"/data/relationships/parents?parentInstanceId="}/>
+                                        </Col>
+                                    </Row>
+                                    {this.state.relationships.collectionSummaries.map((cs,i) => (
+                                        <Row key={i}>
+                                            <Col xs="4">
+                                                <OptionDisplay 
+                                                    name={"Collection Instance ID"} 
+                                                    value={cs.collectionInstanceId} 
+                                                    isLink={true} 
+                                                    href={'/data/relationships/collections?collectionInstanceId=' + cs.collectionInstanceId}/>
+                                            </Col>
+                                            <Col><OptionDisplay name={"Collection Name"} value={cs.collectionName} /></Col>
+                                        </Row>
+                                    ))}
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                )
+            }else{
+                return(
+                    <span></span>
+                )
+            }
         }
 
         return(

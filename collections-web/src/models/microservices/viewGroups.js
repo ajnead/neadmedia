@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 import { Row, Col, Card, CardBody, CardTitle, CardLink, CardFooter } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import OptionDisplay from '../../components/cards/optionDisplay';
 import OptionDisplayList from '../../components/cards/optionDisplayList';
 import MicroserviceRoutes from '../../controllers/microserviceRoutes';
@@ -137,7 +138,7 @@ class ViewGroups extends React.Component {
                                     <CardFooter>
                                         <CardLink href="javascript:void(0);" onClick={()=>this.startGroup(group.groupName)}>Start Group</CardLink>
                                         <CardLink href="javascript:void(0);" onClick={()=>this.stopGroup(group.groupName)}>Stop Group</CardLink>
-                                        <CardLink href={"/system/microservices/all?microserviceGroup=" + group.groupName}>View Microservices</CardLink>
+                                        <CardLink tag={Link} to={"/system/microservices/all?microserviceGroup=" + group.groupName}>View Microservices</CardLink>
                                     </CardFooter>
                                 </Card>
                             </Row>    
