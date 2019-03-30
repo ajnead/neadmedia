@@ -2,9 +2,7 @@ import React from 'react';
 import { Nav, Container } from 'reactstrap';
 import ThirdNavLinks from '../components/nav/thirdNavLinks';
 import ThirdNavSwitch from '../components/nav/thirdNavSwitch';
-import CrawlerMapping from '../models/crawler/crawlerMappings';
-import RealTimeCrawler from '../models/crawler/realTimeCrawler';
-import CrawlerSettings from '../models/crawler/crawlerSettings';
+import DefaultView from '../components/defaultView'
 
 class CrawlerContainer extends React.Component {
 
@@ -14,19 +12,19 @@ class CrawlerContainer extends React.Component {
         this.state = {
             navItems: [
                 {
-                  name: 'Entity Mappings',
+                  name: 'Mappings',
                   to: '/definitions/crawler/mappings',
-                  component: CrawlerMapping
+                  component: DefaultView
                 },
                 {
                     name: 'Real Time Crawler',
                     to: '/definitions/crawler/realTime',
-                    component: RealTimeCrawler
+                    component: DefaultView
                 },
                 {
-                    name: 'Crawler Setting',
+                    name: 'Setting',
                     to: '/definitions/crawler/settings',
-                    component: CrawlerSettings
+                    component: DefaultView
                 }
             ]
         }
