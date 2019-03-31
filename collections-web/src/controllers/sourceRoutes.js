@@ -51,7 +51,7 @@ class SourceRoutes {
     }
 
     getPipelineProcessSource(sourceInstanceId,pipelineSelection,callback){
-        var url = this._route + sourceInstanceId + '/pipeline/' + pipelineSelection + '?&isPreview=false&' + originTracer();
+        var url = this._route + sourceInstanceId + '/pipeline/' + pipelineSelection + '?&viewType=all&&isPreview=false&' + originTracer();
         const get = new Get('source-processPipeline',url,()=>{
             this.returnParam = get;
             callback();

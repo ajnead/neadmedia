@@ -65,7 +65,8 @@ class ProcessPipeline extends React.Component {
                 },
             ],
             pipelineSelection: "normalize",
-            loadState: 'waitingQuery'
+            loadState: 'waitingQuery',
+            successMessage: ''
         }
 
         this.changeValue = this.changeValue.bind(this);
@@ -96,7 +97,8 @@ class ProcessPipeline extends React.Component {
 
             if(status==="success"){
                 this.setState({
-                    loadState: 'success'
+                    loadState: 'success',
+                    successMessage: response.payload.message
                 });   
             }else{
                 this.setState({
@@ -131,7 +133,7 @@ class ProcessPipeline extends React.Component {
         const ProcessingMessage = (props) => {
             switch(props.loadState){
                 case 'waitingResult' : return <div>Loading...</div>
-                case 'success' : return <div>Completed Successfully</div>
+                case 'success' : return <div>{this.state.successMessage}</div>
                 case 'error' : return <div>An error has occurred, please check action log for more information</div>
                 default: return <div>To reprocess this source in the item pipeline select a pipeline service that the source should start at</div>
             }
