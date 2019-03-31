@@ -99,9 +99,7 @@ class GetParent extends React.Component {
     }
 
     loadParent(){
-        this.setState({
-            loadState: 'waitingResults'
-        })
+        this.setState({ loadState: 'waitingResults' })
 
         if(this.state.attributeNames==null){
             this.loadAttributeNames();
@@ -276,7 +274,7 @@ class GetParent extends React.Component {
                             <h3 className="margin-top-0">Parent Information</h3>
                             <Card>    
                                 <CardBody>
-                                    <CardTitle tag="h4">Parent Relationship ID: {this.state.parent.parentInstanceId}</CardTitle>
+                                    <CardTitle tag="h4">Parent Instance ID: {this.state.parent.parentInstanceId}</CardTitle>
                                     <Row>
                                         <Col><OptionDisplay name={"Relationship Instance ID"} value={this.state.parent.relationshipInstanceId} /></Col>
                                         <Col><OptionDisplay name={"Create Date"} value={<Moment unix tx="America/New_York">{this.state.parent.createDate / 1000}</Moment>} /></Col>
@@ -404,7 +402,7 @@ class GetParent extends React.Component {
                        <Display />
                     )
                 case 'notFound': 
-                    return <div>Parent Relationship type not found</div>
+                    return <div>Parent relationship type not found</div>
                 case 'error': 
                     return <div>An error has occurred</div>
                 default:
@@ -425,7 +423,7 @@ class GetParent extends React.Component {
                                 value={this.state.parentInstanceId} 
                                 onChange={event => this.changeValue(event,"parentInstanceId")} 
                                 onKeyDown={this.checkEnter}
-                                placeholder="Search Parent Instance ID"
+                                placeholder="Search Parent a Instance ID"
                             />
                         </FormGroup>
                     </Col>

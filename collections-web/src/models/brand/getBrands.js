@@ -39,7 +39,7 @@ class GetBrands extends React.Component {
 
             var right = [];
             var left = [];
-            if(response.payload.brands!==null){
+            if(response.payload.brands!==null&&response.payload.brands!==undefined){
                 var isLeft = true;
                 for(var obj of response.payload.brands){
                     if(isLeft){

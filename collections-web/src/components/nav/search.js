@@ -41,6 +41,7 @@ class Search extends React.Component {
            case 'trc-' : url = '/system/trace?traceId=' + search; break;
            case 'src-' : url = '/data/sources/data?sourceInstanceId=' + search; break;
            case 'rrp-' : url = '/data/relationships/parents?parentInstanceId=' + search; break;
+           case 'col-' : url = '/data/relationships/collections?collectionInstanceId=' + search; break;
         }
 
         const protocolPrefix = "page:";

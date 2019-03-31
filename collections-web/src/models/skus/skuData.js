@@ -283,7 +283,7 @@ class SkuData extends React.Component {
                             <h3 className="margin-top-0">Relationships</h3>
                             <Card>
                                 <CardBody>
-                                    <Row className = "margin-bottom-10">
+                                    <Row className = "margin-bottom-0">
                                         <Col>
                                             <OptionDisplayList 
                                                 name={"Parent Instance IDs"} 
