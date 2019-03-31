@@ -51,13 +51,28 @@ class RelationshipRoutes {
         get.execute();
     }
 
+    putCollectionToIndex(collectionInstanceId){
+        var url = this._routeCollection + collectionInstanceId + '/index?' + originTracer();
+        const put = new Put('collection-putCollectionToIndex',url,null,null);
+        put.execute();
+    }
+
     /**
      * methods that retrieve read only data required for the collection-ui 
      */
 
     getUiRelationshipsBySkuInstanceId(skuInstanceId,callback){
         var url = this._routeUI + 'relationshipsBySkuInstanceId/' + skuInstanceId + '/query?viewType=all&' + originTracer();
-        const get = new Get('relationshipUI-getRelationshipsBySkuInstanceId',url,()=>{
+        const get = new Get('relationshipUI-getUiRelationshipsBySkuInstanceId',url,()=>{
+            this.returnParam = get;
+            callback();
+        });
+        get.execute();
+    }
+
+    getUiCollectionsByParentInstanceId(parentInstanceId,callback){
+        var url = this._routeUI + 'collectionsByParentInstanceId/' + parentInstanceId + '/query?viewType=all&' + originTracer();
+        const get = new Get('relationshipUI-getUiCollectionsByParentInstanceId',url,()=>{
             this.returnParam = get;
             callback();
         });

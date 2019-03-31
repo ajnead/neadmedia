@@ -6,7 +6,8 @@ import 'moment-timezone';
 import Configs from '../../../configs/configs';
 import RelationshipRoutes from '../../../controllers/relationshipRoutes';
 import OptionDisplay from '../../../components/cards/optionDisplay';
-import PreviewJson from '../../../components/pullUp/previewJson';
+import RenderJson from '../../../components/display/renderJson';
+import ModalPage from '../../../components/display/modalPage';
 import getQueryParameter from '../../../utilities/url/getQueryParameter';
 import addQueryParameter from '../../../utilities/url/addQueryParameter';
 
@@ -31,6 +32,8 @@ class GetCollection extends React.Component {
 
         this.changeValue = this.changeValue.bind(this);
         this.checkEnter = this.checkEnter.bind(this);
+        this.openModalPageCollectionJson = this.openModalPageCollectionJson.bind(this);
+        this.indexCollection = this.indexCollection.bind(this);
     }
 
     componentDidMount(){
@@ -59,6 +62,15 @@ class GetCollection extends React.Component {
         if(event.keyCode == 13){
             addQueryParameter("collectionInstanceId",this.state.collectionInstanceId);
         }
+    }
+
+    openModalPageCollectionJson(){
+        this.refs.viewCollectionJson.open();
+    }
+
+    indexCollection(){
+        const relationshipRoutes = new RelationshipRoutes();
+        relationshipRoutes.putCollectionToIndex(this.state.collectionInstanceId);
     }
 
     loadCollection(){
@@ -222,7 +234,7 @@ class GetCollection extends React.Component {
                                     </Row>
                                 </CardBody>
                                 <CardFooter>
-                                    <CardLink href="javascript:void(0);" onClick={this.viewJson}>View Collection JSON</CardLink>
+                                    <CardLink href="javascript:void(0);" onClick={this.openModalPageCollectionJson}>View Collection JSON</CardLink>
                                     <CardLink href="javascript:void(0);" onClick={this.indexCollection}>Re-index Collection</CardLink>
                                 </CardFooter>
                             </Card>
@@ -296,6 +308,7 @@ class GetCollection extends React.Component {
                     </Col>
                 </Row>
                 <DetermineResponse loadState={this.state.loadState} />
+                <ModalPage ref="viewCollectionJson" component={<RenderJson json={this.state.collection} />} pullUpType={"view"} />
             </Container>
         )
     }

@@ -33,7 +33,9 @@ class GetParent extends React.Component {
             variantAttributes: [],
             nonVariantAttributes: [],
             loadState: "waitingQuery",
-            parentInstanceIdSearch: ""
+            parentInstanceIdSearch: "",
+            hasOtherRelationships: false,
+            otherRelationships: []
         }
 
         this.changeValue = this.changeValue.bind(this);
@@ -165,6 +167,8 @@ class GetParent extends React.Component {
                     selectedImage: mainImage,
                     loadState: 'success',
                     nonVariantAttributes: nonVariantAttributes
+                },()=>{
+                    this.loadOtherRelationships()
                 })
             }else if(status==="not_found"){
                 this.setState({
@@ -173,6 +177,20 @@ class GetParent extends React.Component {
             }else{
                 this.setState({
                     loadState: "error"
+                })
+            }
+        });
+    }
+
+    loadOtherRelationships(){
+        const relationshipRoutes = new RelationshipRoutes();
+        relationshipRoutes.getUiCollectionsByParentInstanceId(this.state.parentInstanceId,()=>{
+            var response = relationshipRoutes.returnParam;
+            var status = response.metadata.status;
+            if(status==="success"){
+                this.setState({
+                    otherRelationships: response.payload,
+                    hasOtherRelationships: true
                 })
             }
         });
@@ -266,6 +284,38 @@ class GetParent extends React.Component {
             }
         }
 
+        const DisplayOtherRelationships = () => {
+            if(this.state.hasOtherRelationships){
+                return(
+                    <Row className="margin-top-10">
+                        <Col>
+                            <h3 className="margin-top-0">Relationships</h3>
+                            <Card>
+                                <CardBody>
+                                {this.state.otherRelationships.collections.map((cs,i) => (
+                                    <Row key={i}>
+                                        <Col xs="4">
+                                            <OptionDisplay 
+                                                name={"Collection Instance ID"} 
+                                                value={cs.collectionInstanceId} 
+                                                isLink={true} 
+                                                href={'/data/relationships/collections?collectionInstanceId=' + cs.collectionInstanceId}/>
+                                        </Col>
+                                        <Col><OptionDisplay name={"Collection Name"} value={cs.collectionName} /></Col>
+                                    </Row>
+                                ))}
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                )
+            }else{
+                return(
+                    <span className="display-none"></span>
+                )
+            }
+        }
+
         const Display = (props) => {
             return(
                 <div>
@@ -293,6 +343,7 @@ class GetParent extends React.Component {
                             </Card>
                         </Col>
                     </Row>
+                    <DisplayOtherRelationships />
                     <Row className="margin-top-10">
                         <Col>
                             <h3 className="margin-top-0">Non Variant Attributes</h3>

@@ -61,14 +61,14 @@ const NavRoutes = [
     {
         navName : "Data",
         path : "/data",
-        defaultPath : "/sources/data",
+        defaultPath : "/sources/pipeline",
         className : "default",
         id : "navData",
         children : [
             {
                 path : "/sources",
                 navName : "Sources",
-                defaultPath : "/data",
+                defaultPath : "/pipeline",
                 component: SourceContainer,
             },
             {
