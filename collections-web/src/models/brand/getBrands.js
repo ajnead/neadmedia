@@ -5,6 +5,7 @@ import Configs from '../../configs/configs';
 import OptionDisplay from '../../components/cards/optionDisplay';
 import ModalPage from '../../components/display/modalPage';
 import RenderJson from '../../components/display/renderJson';
+import getQueryParameter from '../../utilities/url/getQueryParameter';
 import EditBrand from './editBrand';
 import GetHistory from './getHistory';
 
@@ -28,7 +29,11 @@ class GetBrands extends React.Component {
 
     componentDidMount(){
         this.loadInitialBrands();
-        //this.openEdit(1);
+        var queryParameter = getQueryParameter("brandCollectionId");
+        console.log(queryParameter);
+        if(queryParameter!==undefined&&queryParameter!=null){
+            this.loadBrandCollection(queryParameter);
+        }
     }
 
     loadInitialBrands(){
@@ -59,6 +64,19 @@ class GetBrands extends React.Component {
                 })
             }
         })
+    }
+
+    loadBrandCollection(brandCollectionId){
+        const brandRoutes = new BrandRoutes();
+        brandRoutes.getBrandCollection(brandCollectionId,()=>{
+            var response = brandRoutes.returnParam;
+            var status = response.metadata.status;
+            if(status==="success"){
+                if(response.payload.brandId>0){
+                    this.openEdit(response.payload.brandId);
+                }
+            }
+        });
     }
 
     openEdit(brandId){

@@ -78,6 +78,15 @@ class BrandRoutes {
         del.execute();
     }
 
+    getBrandCollection(brandCollectionId,callback){
+        const url = this._route + 'collection/' + brandCollectionId + '/read?viewType=all&' + originTracer();
+        const get = new Get('brandRoutes-getBrandCollection',url,()=>{
+            this.returnParam = get;
+            callback();
+        });
+        get.execute();
+    }
+
     putBrandCollectionNew(collectionJson,brandId,callback){
         const url = this._route + 'collection/' + brandId + '/0/write?' + originTracer();
         const put = new Put('brandRoutes-putBrandCollectionNew',url,collectionJson,()=>{

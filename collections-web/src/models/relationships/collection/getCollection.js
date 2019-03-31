@@ -164,8 +164,8 @@ class GetCollection extends React.Component {
 
         const DisplayChildrenLink = (props) => {
             switch(props.childType){
-                case 'parent' : return <OptionDisplay name={"Child Type Instance ID"} value={props.childTypeInstanceId} isLink={true} href={'/data/relationships/parents?parentInstanceId=' + props.childTypeInstanceId}/>
-                case 'sku' : return <OptionDisplay name={"Child Type Instance ID"} value={props.childTypeInstanceId} isLink={true} href={'/data/skus/data?skuInstanceId=' + props.childTypeInstanceId}/>
+                case 'parent': return <OptionDisplay name={"Child Type Instance ID"} value={props.childTypeInstanceId} isLink={true} href={'/data/relationships/parents?parentInstanceId=' + props.childTypeInstanceId}/>
+                case 'sku': return <OptionDisplay name={"Child Type Instance ID"} value={props.childTypeInstanceId} isLink={true} href={'/data/skus/data?skuInstanceId=' + props.childTypeInstanceId}/>
             }
         }
 
@@ -190,6 +190,13 @@ class GetCollection extends React.Component {
                     ))}
                 </div>
             )
+        }
+
+        const DisplayChildClassIdLink = (props) => {
+            switch(props.collectionClass){
+                case "brand": return <OptionDisplay name={"Brand Collection ID"} value={props.collectionClassId} isLink={true} href={'/definitions/brands?brandCollectionId=' + props.collectionClassId}/>;
+                default: return <OptionDisplay name={"Collection Class Id"} value={props.collectionClassId} />;
+            }
         }
 
         const Display = (props) => {
@@ -224,7 +231,7 @@ class GetCollection extends React.Component {
                                             </Row>
                                             <Row>
                                                 <Col><OptionDisplay name={"Collection Class"} value={this.state.collection.collectionClass} /></Col>
-                                                <Col><OptionDisplay name={"Collection Class Id"} value={this.state.collection.collectionClassId} /></Col>
+                                                <Col><DisplayChildClassIdLink collectionClass={this.state.collection.collectionClass} collectionClassId={this.state.collection.collectionClassId} /></Col>
                                             </Row>
                                             <Row>
                                                 <Col><OptionDisplay name={"Generate Type"} value={this.state.collection.generatedType} /></Col>
