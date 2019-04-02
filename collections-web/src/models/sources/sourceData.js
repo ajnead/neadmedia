@@ -318,6 +318,9 @@ class SourceData extends React.Component {
                                     </Row>
                                     <Row>
                                         <Col><OptionDisplay name={"Attribute Unit"} value={att.attributeUnit} /></Col>
+                                    </Row>
+                                    <Row>
+                                        <Col><OptionDisplay name={"Alt Attribute Name"} value={att.altAttributeName} /></Col>
                                         <Col><OptionDisplay name={"Attribute Order"} value={att.attributeOrder} /></Col>
                                         <Col><OptionDisplay name={"Enumerated Option ID"} value={att.enumeratedOptionId} /></Col>
                                     </Row>

@@ -140,7 +140,7 @@ class TraceContainer extends Component {
                     </Row>
                     <Row>
                         <Col>
-                            <h3 className="margin-top-10">Trace Meta Data</h3>
+                            <h3 className="margin-top-10">Trace Meta Data [{props.traceMetaData.length}]</h3>
                         </Col>
                     </Row>
                     <Row>

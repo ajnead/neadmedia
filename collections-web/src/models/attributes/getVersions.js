@@ -1,8 +1,8 @@
 import React from 'react';
-import {Row, Col, FormGroup, Label, Input} from 'reactstrap';
-import originTracer from '../../utilities/api/originTracer';
-import Configs from '../../configs/configs';
-import AttributeURLs from '../../configs/attributesURLs';
+import { Row, Col, FormGroup } from 'reactstrap';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import AttributeRoutes from '../../controllers/attributeRoutes'; 
 
 class GetVersions extends React.Component {
 
@@ -12,64 +12,94 @@ class GetVersions extends React.Component {
         this.state = {
             versions: [{
                 versionName: "public",
+                codeSafeVersionName: "public",
                 attributeVersionId: 0
             }],
-            versionDefault: "public"
+            value:[{
+                versionName: "public",
+                codeSafeVersionName: "public",
+                attributeVersionId: 0
+            }],
+            versionName: "public",
+            isLoading: false,
+            optionsLoaded: false,
+            value: []
         }
-
-        this.selectVersion = this.selectVersion.bind(this);
+        this.search = this.search.bind(this);
     }
 
-    selectVersion(event){
-        var version = event.target.value;
-        this.setState({
-            versionDefault: version
-        })
-        this.props.setVersion(version);
+    selected(value){
+        var versionName = "public";
+        if(value!==null&&value!==undefined&&value.length>0){
+            versionName = value[0].versionName;            
+        }
+
+        this.setState({ versionName: versionName });
+        this.props.setVersion(versionName);
     }
 
     componentDidMount(){
-        this.props.setVersion(this.state.versionDefault);
-        var url = Configs.collectionApiUrl + AttributeURLs.getAllVersions + '?viewType=public&' + originTracer(); 
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Authorization': 'private' 
-            }
-        })
-        .then(response => response.json())
-        .then(response => {
-            var metaData = response.metadata;
-            var status = metaData.status;
+        this.props.setVersion(this.state.versionName);
+        this.search();
+    }
 
-            if(status==="success"){
-                var versionsState = this.state.versions;
-                var versionsResponse = response.payload.attributeVersions;
-                for(var v=0; v<versionsResponse.length; v++){
-                    versionsState.push(versionsResponse[v]);
+    search(){
+        if(!this.state.optionsLoaded){
+            const attributeRoutes = new AttributeRoutes();
+            attributeRoutes.getAttributeVersions(()=>{
+                var response = attributeRoutes.returnParam;
+                var status = response.metadata.status;
+
+                if(status==="success"){
+                    var versionsState = this.state.versions;
+                    var versionsResponse = response.payload.attributeVersions;
+                    for(var v=0; v<versionsResponse.length; v++){
+                        versionsState.push(versionsResponse[v]);
+                    }
+
+                    this.setState({
+                        optionsLoaded: true,
+                        versions: versionsState    
+                    });   
                 }
-
-                this.setState({
-                    versions: versionsState    
-                });   
-            }
-        });
+            });
+        }
     }
 
     render(){
+        const filterByFields = ['versionName','codeSafeVersionName']
+
         return(
             <Row className="margin-top-10">
-                <Col>
+                <Col xs="6">
                     <FormGroup>
-                        <Label for="attributeVersion">Attribute Version</Label>
-                        <Input type="select" name="attributeVersion" id="attributeVersion" value={this.state.versionDefault} onChange={event => this.selectVersion(event)}>
-                            {this.state.versions.map((r, i) => ( 
-                                <option value={r.versionName} key={i}>{r.versionName}</option>
-                            ))}
-                        </Input>
+                        <Typeahead
+                            onChange={(value) => {
+                                this.setState({value})
+                                this.selected(value);
+                            }}
+                            selected={this.state.value}
+                            dropDown={true}
+                            labelKey="versionName"
+                            bg-color-white
+                            onSearch={this.search}
+                            multiple={false}
+                            allowNew={false}
+                            options={this.state.versions}
+                            filterBy={filterByFields}
+                            isLoading={this.state.isLoading}
+                            placeholder={"Select attribute version"}
+                            renderMenuItemChildren={(option) => (
+                                <div>
+                                    {option.versionName}
+                                    <div>
+                                        <small className="text-muted">Code Safe Name: {option.codeSafeVersionName}</small>
+                                    </div>
+                                </div>
+                            )}
+                        />
                     </FormGroup>
                 </Col>
-                <Col></Col>
             </Row>
         )
     }

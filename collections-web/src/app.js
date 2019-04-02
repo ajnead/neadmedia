@@ -13,7 +13,7 @@ class App extends Component {
 
   componentDidMount(){
     const pathName = window.location.pathname;
-    if(pathName.length<2){
+    if(pathName.length<5){
       this.props.history.push("/data/sources/pipeline");
     }
   }

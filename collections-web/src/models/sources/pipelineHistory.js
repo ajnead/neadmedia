@@ -90,9 +90,8 @@ class PipelineHistory extends React.Component {
                                         <Col><OptionDisplay name={"Machine"} value={his.machine} /></Col>
                                     </Row>
                                     <Row>
-                                        <Col><OptionDisplay name={"Trace ID"} value={his.traceId} /></Col>
-                                        <Col><OptionDisplay name={"Origin Trace ID"} value={his.originTraceId} /></Col>
-                                        <Col></Col>
+                                        <Col xs="4"><OptionDisplay name={"Trace ID"} value={his.traceId} isLink={true} isLink={true} href={"/system/trace?traceId=" + his.traceId} /></Col>
+                                        <Col><OptionDisplay name={"Origin Trace ID"} value={his.originTraceId} isLink={true} isLink={true} href={"/system/trace?traceId=" + his.originTraceId} /></Col>
                                     </Row>
                                 </CardBody>
                             </Card>

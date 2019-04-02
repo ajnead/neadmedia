@@ -112,14 +112,6 @@ class EditAttribute extends React.Component {
         this.getAttributeInformation();
     }
 
-    /*
-    static getDerivedStateFromProps(props){  
-        return{
-            canEdit: props.canEdit
-        }
-    }
-    */
-
     createValueModalToggle(){
         this.setState({
             createValueModalOpen : !this.state.createValueModalOpen
@@ -560,7 +552,7 @@ class EditAttribute extends React.Component {
                             </CardTitle>
                             <div className="margin-top-5">
                                 <div className="vertical-breaks float-left"><b>Attribute Value ID</b>: {m.attributeValueId}</div>
-                                <div className="vertical-breaks float-left"><b>Is Case Sensative</b>: {JSON.stringify(m.isCaseSensitive)}</div>
+                                <div className="vertical-breaks float-left"><b>Is Case Sensative</b>: {JSON.stringify(m.isCaseSensative)}</div>
                                 <div className="vertical-breaks float-left"><b>Attribute Value</b>: {m.value}</div>
                                 <div className="vertical-breaks float-left"><b>Attribute Unit</b>: {m.unit}</div>
                                 <div className="float-left"><b>Order</b>: {JSON.stringify(m.attributeValueOrder)}</div>

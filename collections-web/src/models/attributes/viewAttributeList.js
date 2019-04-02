@@ -1,10 +1,8 @@
 import React from 'react';
 import { Row, Card, CardFooter, CardTitle, CardSubtitle, CardBody, CardText, CardLink } from 'reactstrap';
-import Guid from 'guid';
 import Moment from 'react-moment';
 import 'moment-timezone';
-import Configs from '../../configs/configs';
-import AttributeURLs from '../../configs/attributesURLs';
+import AttributeRoutes from '../../controllers/attributeRoutes';
 import OptionDisplay from '../../components/cards/optionDisplay';
 
 class ViewAttributeList extends React.Component{
@@ -32,34 +30,19 @@ class ViewAttributeList extends React.Component{
     }
 
     load(){
-        var component = this;
-        var version = this.state.version;
-        var guid = 'cmui-' + Guid.create();
-        var url = Configs.collectionApiUrl + AttributeURLs.getAllAttributes + '?viewType=all&version=' + version + '&originTraceId=' + guid; 
-        
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Authorization': 'private' 
-            }
-        })
-        .then(response => response.json())
-        .then(response => {
-            var metaData = response.metadata;
-            var status = metaData.status;
-
+        const attributeRoutes = new AttributeRoutes();
+        attributeRoutes.getAllAttributes(this.state.version,()=>{
+            var response = attributeRoutes.returnParam;
+            var status = response.metadata.status;
+            
             if(status==="success"){
                 var attributes = response.payload.attributes;
             
-                component.setState({
+                this.setState({
                     attributes: attributes
                 });   
             }
-
-            component.setState({
-                metaData : metaData
-            });
-        });
+        })
     }
 
     open(){
@@ -107,13 +90,13 @@ class ViewAttributeList extends React.Component{
                                 <CardLink href={"#editAttribute=true&attributeId=" + r.attributeId } onClick={this.open}>Edit Attribute</CardLink>
                                 <CardLink href={"#editAttribute=true&attributeId=" + r.attributeId } onClick={()=>this.props.openAttributeHistory(r.attributeId,r.attributeName)}>View Attribute History</CardLink>
                                 <CardText className="float-right">
-                                    <small className="text-muted">Last updated <Moment setmilliseconds={r.updateDate} locale="us" tz="America/New_York" /></small>
+                                    <small className="text-muted">Last updated: <Moment unix tx="America/New_York">{r.updateDate / 1000}</Moment></small>
                                 </CardText>  
                             </CardFooter>) :
                             (<CardFooter>
                                 <CardLink href={"#editAttribute=false&attributeId=" + r.attributeId } onClick={this.open}>View Attribute</CardLink>
                                 <CardText className="float-right">
-                                    <small className="text-muted">Last updated <Moment setmilliseconds={r.updateDate} locale="us" tz="America/New_York" /></small>
+                                    <small className="text-muted">Last updated: <Moment unix tx="America/New_York">{r.updateDate / 1000}</Moment></small>
                                 </CardText>  
                             </CardFooter>)
                         )}

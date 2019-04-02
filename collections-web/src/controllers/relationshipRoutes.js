@@ -48,6 +48,7 @@ class RelationshipRoutes {
             this.returnParam = get;
             callback();
         });
+        get.setShowMessageModal(false);
         get.execute();
     }
 
@@ -67,6 +68,7 @@ class RelationshipRoutes {
             this.returnParam = get;
             callback();
         });
+        get.setShowMessageModal(false);
         get.execute();
     }
 

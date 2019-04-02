@@ -64,9 +64,6 @@ class DropDownAttribute extends React.Component {
 
     render(){
         const filterByFields = ['attributeId','attributeName']
-        var bgColor = "";
-        this.props.isWhite ? bgColor = "bg-color-white" : bgColor = "";
-
 
         return(
             <FormGroup>
@@ -87,7 +84,6 @@ class DropDownAttribute extends React.Component {
                     filterBy={filterByFields}
                     isLoading={this.state.isLoading}
                     placeholder={this.props.placeholder}
-                    className={bgColor}
                     renderMenuItemChildren={(option) => (
                         <div>
                             {option.attributeName}

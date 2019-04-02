@@ -1,7 +1,6 @@
 import React from 'react';
 import {CardBody, CardTitle, FormGroup, Form, Label, Input} from 'reactstrap';
-import Guid from 'guid';
-import Configs from '../../configs/configs';
+import AttributeRoutes from '../../controllers/attributeRoutes';
 
 class EditSynonym extends React.Component {
 
@@ -41,46 +40,31 @@ class EditSynonym extends React.Component {
             attributeValueId: this.state.attributeValueId
         }
 
-        var array = this.state.attributeSynonyms;
-        array.push(addSynonymJson);
-        this.setState({
-            attributeSynonyms : array,
-            addSynonymValue: ""
-        })
-
-        var guid = 'cmui-' + Guid.create();
-        fetch(Configs.collectionApiUrl + '/attribute/synonym/create?originTraceId=' + guid, {
-            method: 'POST',
-            headers: {
-                'Authorization': 'private',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(addSynonymJson)
-        })
-        .then(response => response.json())
-        .then(response => {
-            var metaData = response.metadata;
-            var status = metaData.status;
+        const attributeRoutes = new AttributeRoutes();
+        attributeRoutes.postAttributeSynonym(addSynonymJson,()=>{
+            var response = attributeRoutes.returnParam;
+            var status = response.metadata.status;
             
-            //TODO: this needs a event handler to push into my work notification panel
-            //TODO: probably need an api to handle my work
-        });
+            if(status==="success"){
+                var attributeSynonymId = response.payload.attributeSynonymId;
+                addSynonymJson.attributeSynonymId = attributeSynonymId;
+
+                var array = this.state.attributeSynonyms;
+                array.push(addSynonymJson);
+                this.setState({
+                    attributeSynonyms : array,
+                    addSynonymValue: ""
+                })
+            }
+        })
     }
 
     deleteSynonym(attributeSynonymId){
-        var guid = 'cmui-' + Guid.create();
-        fetch(Configs.collectionApiUrl + '/attribute/synonym/' + attributeSynonymId + '/delete?originTraceId=' + guid, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': 'private',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(response => {
-            var metaData = response.metadata;
-            var status = metaData.status;
-            
+        const attributeRoutes = new AttributeRoutes();
+        attributeRoutes.deleteAttributeSynonym(attributeSynonymId,()=>{
+            var response = attributeRoutes.returnParam;
+            var status = response.metadata.status;
+
             if(status==="success"){
                 if(response.payload.isSuccess){
                     var arr = this.state.attributeSynonyms;
@@ -96,7 +80,7 @@ class EditSynonym extends React.Component {
                     }
                 }
             }
-        })
+        });
     }
 
     render(){

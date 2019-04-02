@@ -262,7 +262,7 @@ class SkuData extends React.Component {
                             <Card className="sku-image">
                                 <CardImg top width="100%" src={Configs.imageUrl + img.hash + "." + img.formatType} alt="No image" />
                                 <CardBody>
-                                    <CardText className="margin-bottom-5">{img.imageTag}</CardText>
+                                    <CardText className="margin-bottom-0">{img.imageTag}</CardText>
                                     <CardText>
                                         <small className="text-muted">{<Moment unix tx="America/New_York" format="MM/DD/YYYY">{img.updateDate / 1000}</Moment>}</small>
                                     </CardText>
