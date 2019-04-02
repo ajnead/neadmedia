@@ -114,6 +114,15 @@ class AttributeRoutes {
         put.execute();
     }
 
+    postAttributeVersionNew(json,callback){
+        const url = this._route + 'version/create?' + originTracer();
+        const post = new Post('attributeRoutes-postAttributeVersionNew',url,json,()=>{
+            this._returnParam = post;
+            callback();
+        })
+        post.execute();
+    }
+
     /**
      * attribute version methods
      */

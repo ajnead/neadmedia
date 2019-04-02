@@ -7,7 +7,7 @@ export const adalConfig = {
     api: '7c3ef25a-74f6-48de-b04f-982eedf0a7a7',
   },
   cacheLocation: 'localStorage',
-  redirectUri: 'http://localhost:3001',
+  redirectUri: 'http://devo.neadmedia.com:5081',
 };
 
 export const authContext = new AuthenticationContext(adalConfig);

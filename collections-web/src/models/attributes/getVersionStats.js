@@ -4,6 +4,7 @@ import Moment from 'react-moment';
 import 'moment-timezone';
 import CreateVersion from './createVersion';
 import OptionDisplay from '../../components/cards/optionDisplay';
+import PopUp from '../../components/display/popup';
 import AttributeRoutes from '../../controllers/attributeRoutes';
 
 class GetVersionStats extends React.Component {
@@ -17,12 +18,11 @@ class GetVersionStats extends React.Component {
                 
             },
             versionNotes: [],
-            loaded: false,
-            versionModal: false,
-            indexModal: false
+            loaded: false
         }
 
-        this.toggleVersionModal = this.toggleVersionModal.bind(this);
+        this.createVersion = this.createVersion.bind(this);
+        this.closeCreateVersion = this.closeCreateVersion.bind(this);
         this.indexVersion = this.indexVersion.bind(this);
     }
 
@@ -35,12 +35,6 @@ class GetVersionStats extends React.Component {
                 this.load();
             })
         }
-    }
-
-    toggleVersionModal(){
-        this.setState({
-            versionModal: !this.state.versionModal
-        });
     }
 
     indexVersion(){
@@ -72,6 +66,14 @@ class GetVersionStats extends React.Component {
         }
     }
 
+    createVersion(){
+        this.refs.createVersion.toggle();
+    }
+
+    closeCreateVersion(){
+        this.refs.createVersion.toggle();
+    }
+
     render(){
         if(this.state.version==="public"){
             return(
@@ -83,13 +85,13 @@ class GetVersionStats extends React.Component {
                                 <CardSubtitle className="margin-top-10">This is the workspace for making changes to the attribute model before any changes are versioned.  A new version can be created at any time.</CardSubtitle>
                             </CardBody>
                             <CardFooter>
-                                <CardLink href={"#versionModal"} onClick={this.toggleVersionModal} >Version Workspace</CardLink>
+                                <CardLink href={"#versionModal"} onClick={this.createVersion} >Version Workspace</CardLink>
                                 <CardLink href={"#indexWorkspace"} onClick={this.indexVersion}>Index Workspace</CardLink>
                                 <CardLink href={"#editAttribute=true&attributeId=0"} onClick={()=>this.props.addAttribute()}>Add Attribute</CardLink>
                             </CardFooter>
                         </Card>
                     </Col>
-                    <CreateVersion open={this.state.versionModal} onClose={this.toggleVersionModal} />
+                    <PopUp ref="createVersion" title={'Create New Version'} component={<CreateVersion close={this.closeCreateVersion} />}/>
                 </Row>
             )
         }

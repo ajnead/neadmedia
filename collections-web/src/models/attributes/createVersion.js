@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal, ModalBody, ModalFooter, FormGroup, Label, Input, Button } from 'reactstrap';
+import { FormGroup, Input, Button } from 'reactstrap';
+import AttributeRoutes from '../../controllers/attributeRoutes';
 
 class CreateVersion extends React.Component {
 
@@ -7,40 +8,43 @@ class CreateVersion extends React.Component {
         super(props);
 
         this.state = {
-            isComplete: true,
-            modal: false
+            versionNote1: null,
         };
-    
-        this.toggle = this.toggle.bind(this);
+
+        this.create = this.create.bind(this);
+        this.changeValue = this.changeValue.bind(this);
     }
 
-    componentDidUpdate(){
-        var open = this.props.open;
-        if(open&&!this.state.modal){
-            this.toggle();
-            this.props.onClose();
-        }
+    create(){
+        var arr = [];
+        arr.push(this.state.versionNote1);
+
+        const attributeRoutes = new AttributeRoutes();
+        attributeRoutes.postAttributeVersionNew(arr,()=>{
+            const response = attributeRoutes.returnParam;
+            const status = response.metadata.status;
+
+            if(status==="success"){
+                this.props.close();
+            }
+        })
     }
 
-    toggle() {
+    changeValue(event,id){
         this.setState({
-          modal: !this.state.modal
-        });
+            [id]: event.target.value
+        })
     }
 
     render(){
         return(
-            <Modal isOpen={this.state.modal} toggle={this.toggle} backdrop={true} zIndex={999999}>
-                <ModalBody>
-                    <FormGroup>
-                        <Label for="versionNotes">Version Notes</Label>
-                        <Input type="text" name="versionNotes" id="versionNotes" />
-                    </FormGroup>
-                </ModalBody>
-                <ModalFooter>
-                    <Button className="bg-color-second no-border" block>Create New Attribute Version</Button>
-                </ModalFooter>
-            </Modal>
+            <div>
+                <FormGroup>
+                    <div className="height-30 padding-top-5"><div className="float-left">Version Notes</div> <a className="float-right alt display-none">Add Another Note</a></div>
+                    <Input type="text" name="versionNotes" id="versionNotes" onChange={(event)=>this.changeValue(event,"versionNote1")} />
+                </FormGroup>
+                <Button className="bg-color-second no-border" block onClick={this.create}>Create New Attribute Version</Button>
+            </div>
         )
     }
 }
