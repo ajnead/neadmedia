@@ -118,7 +118,6 @@ class EditBrand extends React.Component {
     }
 
     deleteSynonym(brandSynonymId){
-        console.log(brandSynonymId);
         const brandRoutes = new BrandRoutes();
         brandRoutes.deleteBrandSynonym(brandSynonymId,this.state.brandId,()=>{
             const response = brandRoutes.returnParam;

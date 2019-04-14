@@ -30,7 +30,6 @@ class GetBrands extends React.Component {
     componentDidMount(){
         this.loadInitialBrands();
         var queryParameter = getQueryParameter("brandCollectionId");
-        console.log(queryParameter);
         if(queryParameter!==undefined&&queryParameter!=null){
             this.loadBrandCollection(queryParameter);
         }

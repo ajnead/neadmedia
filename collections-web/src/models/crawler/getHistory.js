@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import BrandRoutes from '../../controllers/brandRoutes';
+import CrawlerRoutes from '../../controllers/crawlerRoutes';
 import HistoryCard from '../../components/cards/historyCards';
 
 class GetHistory extends React.Component {
@@ -9,8 +9,8 @@ class GetHistory extends React.Component {
         super(props);
 
         this.state = {
-            brandId: 0,
-            brandName: '',
+            crawlerInstanceId: null,
+            crawlerName: '',
             loadState: "waitingQuery",
             history: []
         }
@@ -20,18 +20,18 @@ class GetHistory extends React.Component {
 
     componentDidMount(){
         this.setState({
-            brandId: this.props.brandId,
-            brandName: this.props.brandName
+            crawlerInstanceId: this.props.crawlerInstanceId,
+            crawlerName: this.props.crawlerName
         },()=>{
             this.loadHistory();
         })
     }
 
     componentDidUpdate(){
-        if(this.state.brandId!==this.props.brandId){
+        if(this.state.crawlerInstanceId!==this.props.crawlerInstanceId){
             this.setState({
-                brandId: this.props.brandId,
-                brandName: this.props.brandName
+                crawlerInstanceId: this.props.crawlerInstanceId,
+                crawlerName: this.props.crawlerName
             },()=>{
                 this.loadHistory();
             })
@@ -43,9 +43,9 @@ class GetHistory extends React.Component {
             loadState: 'waitingResults'
         });
         
-        const brandRoutes = new BrandRoutes();
-        brandRoutes.getBrandHistories(this.state.brandId,()=>{
-            var response = brandRoutes.returnParam;
+        const crawlerRoutes = new CrawlerRoutes();
+        crawlerRoutes.getCrawlerHistory(this.state.crawlerInstanceId,()=>{
+            var response = crawlerRoutes.returnParam;
             var status = response.metadata.status;
 
             if(status==="success"){
@@ -67,12 +67,12 @@ class GetHistory extends React.Component {
                 <Row>
                     <Col>
                         <h3 className="margin-top-10 width-100 height-22">
-                            <font>Brand ID: {this.state.brandId} [{this.state.brandName}]</font>
+                            <font>Crawler ID: {this.state.crawlerInstanceId} [{this.state.crawlerName}]</font>
                         </h3>
                     </Col>
                 </Row>
                 <div className="margin-top-15">
-                    <HistoryCard history={this.state.history} idTitle={"Brand History ID"} idName={"brandHistoryId"} />
+                    <HistoryCard history={this.state.history} idTitle={"Crawler History ID"} idName={"crawlerHistoryId"} />
                 </div>
             </Container>
         )

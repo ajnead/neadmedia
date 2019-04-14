@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav, Container } from 'reactstrap';
 import ThirdNavLinks from '../components/nav/thirdNavLinks';
 import ThirdNavSwitch from '../components/nav/thirdNavSwitch';
+import ViewCrawlers from '../models/crawler/viewCrawlers';
 import DefaultView from '../components/defaultView'
 
 class CrawlerContainer extends React.Component {
@@ -12,18 +13,13 @@ class CrawlerContainer extends React.Component {
         this.state = {
             navItems: [
                 {
-                  name: 'Mappings',
+                  name: 'Configurations',
                   to: '/definitions/crawler/mappings',
-                  component: DefaultView
+                  component: ViewCrawlers
                 },
                 {
                     name: 'Real Time Crawler',
                     to: '/definitions/crawler/realTime',
-                    component: DefaultView
-                },
-                {
-                    name: 'Setting',
-                    to: '/definitions/crawler/settings',
                     component: DefaultView
                 }
             ]
