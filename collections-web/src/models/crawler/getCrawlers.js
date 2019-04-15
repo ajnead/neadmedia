@@ -24,7 +24,7 @@ class GetCrawlers extends React.Component {
 
     componentDidMount(){
         this.loadCrawlers();
-        this.openCrawlerViewEdit('crw-2-1');
+        //this.openCrawlerViewEdit('crw-2-1');
     }
 
     loadCrawlers(){
@@ -76,6 +76,23 @@ class GetCrawlers extends React.Component {
         })
     }
 
+    openJson(crawlerInstanceId){
+        const crawlerRoutes = new CrawlerRoutes();
+        crawlerRoutes.getCrawler(crawlerInstanceId,()=>{
+            const response = crawlerRoutes.returnParam;
+            const status = response.metadata.status;
+
+            if(status==="success"){
+                this.setState({
+                    component: <RenderJson json={response.payload} />,
+                    pullUpType: "view"
+                },()=>{
+                    this.refs.modalPage.open();
+                })
+            }
+        })
+    }
+
     render(){
         const DisplayCralwerList= (props) => {
             return(
@@ -108,10 +125,10 @@ class GetCrawlers extends React.Component {
                             </Row>
                         </CardBody>
                         <CardFooter>
-                            <CardLink href="javascript:void(0);" onClick={()=>{alert(1)}}>Re-Index Crawler</CardLink>
+                            <CardLink href="javascript:void(0);" onClick={()=>{alert('coming soon')}}>Re-Index Crawler</CardLink>
                             <CardLink href="javascript:void(0);" onClick={()=>{this.openCrawlerViewEdit(crawler.crawlerInstanceId)}}>Edit Crawler</CardLink>
                             <CardLink href="javascript:void(0);" onClick={()=>{this.openHistory(crawler.crawlerInstanceId,crawler.crawlerName)}}>View History</CardLink>
-                            <CardLink href="javascript:void(0);" onClick={()=>alert(1)}>View JSON</CardLink>
+                            <CardLink href="javascript:void(0);" onClick={()=>{this.openJson(crawler.crawlerInstanceId)}}>View JSON</CardLink>
                         </CardFooter>
                     </Card>
                 ))}
