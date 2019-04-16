@@ -5,6 +5,7 @@ import AssistantContainer from '../../containers/assistantContainer';
 import RequestHistoryContainer from '../../containers/requestHistoryContainer';
 import QuestionsContainer from '../../containers/questionsContainer';
 import CollectionContainer from '../../containers/collectionContainer';
+import OnboardingContainer from '../../containers/onboardingContainer';
 
 const Routes = [
     {
@@ -13,8 +14,8 @@ const Routes = [
         component : HomeContainer,
         isShown : true,
         iconName : "icon-home",
-        headerType: "main"
-
+        headerType: "main",
+        showBottomNav: true
     },
     {
         navName : "Discover",
@@ -22,7 +23,8 @@ const Routes = [
         component : DiscoveryContainer,
         isShown : true,
         iconName : "icon-discover",
-        headerType: "none"
+        headerType: "none",
+        showBottomNav: true
     },
     {
         navName : "Assistant",
@@ -30,7 +32,8 @@ const Routes = [
         component : AssistantContainer,
         isShown : true,
         iconName : "icon-assistant",
-        headerType: "main"
+        headerType: "main",
+        showBottomNav: true
     },
     {
         navName : "Messages",
@@ -38,15 +41,17 @@ const Routes = [
         component : DefaultView,
         isShown : false,
         iconName : "icon-notifications",
-        headerType: "main"
+        headerType: "main",
+        showBottomNav: true
     },
     {
         navName : "Me",
         path : "/me",
         component : DefaultView,
-        isShown : false,
+        isShown : true,
         iconName : "icon-account",
-        headerType: "main"
+        headerType: "main",
+        showBottomNav: true
     },
     {
         navName : "Request History",
@@ -54,7 +59,8 @@ const Routes = [
         component : RequestHistoryContainer,
         isShown : false,
         iconName : "",
-        headerType: "main"
+        headerType: "main",
+        showBottomNav: true
     },
     {
         navName : "Questions",
@@ -62,7 +68,8 @@ const Routes = [
         component : QuestionsContainer,
         isShown : false,
         iconName : "",
-        headerType: "none"
+        headerType: "none",
+        showBottomNav: true
     },
     {
         navName : "Collections",
@@ -70,7 +77,17 @@ const Routes = [
         component : CollectionContainer,
         isShown : false,
         iconName : "",
-        headerType: "none"
+        headerType: "none",
+        showBottomNav: true
+    },
+    {
+        navName : "Onboarding",
+        path : "/onboarding",
+        component : OnboardingContainer,
+        isShown : false,
+        iconName : "",
+        headerType: "none",
+        showBottomNav: false
     }
 ]
 
