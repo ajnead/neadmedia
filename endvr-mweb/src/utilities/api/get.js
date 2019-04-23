@@ -48,7 +48,7 @@ class Get {
 
         const msg = new PubSubMapper(this._eventType,this._url);
         msg.setHttpRequestMethod("GET");
-        msg.setShowMessageModal(this._showMessageModal);
+        msg.setShowMessageModal(false);
 
          fetch(this._url, request)
         .then(response => response.json())

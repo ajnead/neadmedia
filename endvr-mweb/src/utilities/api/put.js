@@ -1,3 +1,6 @@
+import PubSub from 'pubsub-js';
+import PubSubMapper from '../mappers/pubSubMapper';
+
 class Put {
 
     constructor(eventType,url,body,callback){
@@ -48,9 +51,20 @@ class Put {
             }
         }
 
+        const msg = new PubSubMapper(this._eventType,this._url);
+        msg.setHttpRequestMethod("PUT");
+        msg.setShowMessageModal(false);
+        if(this._body!==undefined && this._body!==null) { 
+            request.body = JSON.stringify(this._body)
+            msg.setRequestBody(this._body);
+        }
+
+
          fetch(this._url, request)
         .then(response => response.json())
         .then(response => {
+            msg.setResponse(response);
+            PubSub.publish('endvr-api-request-history', msg.mapper);
             this.metadata = response.metadata;
             this.payload = response.payload;
             

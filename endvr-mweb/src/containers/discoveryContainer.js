@@ -20,7 +20,7 @@ class DiscoveryContainer extends React.Component {
     }
 
     componentDidMount(){
-        this.getCollection("col-1-2");
+        this.getCollection("col-1-1");
     }
 
     changeValue(event,id){

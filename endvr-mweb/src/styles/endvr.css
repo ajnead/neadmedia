@@ -36,12 +36,8 @@ button{
     outline: none !important;
     box-shadow: none !important;
 }
-.divider{
-    width: calc(100% - 10px);
-    border-bottom: 2px solid var(--primary-color);
-}
-.divider.secondary{
-    border-bottom: 2px solid var(--secondary-color);
+a{
+    color: var(--secondary-color) !important;
 }
 
 /*generic styles*/
@@ -306,8 +302,8 @@ button{
     color: #888;
     font-weight: 400;
 }
-.bttn-secondary{
-    background: var(--secondary-color);
+.btn-secondary{
+    background: var(--secondary-color) !important;
 }
 .e-pill{
     float: left;
@@ -316,11 +312,11 @@ button{
     text-align: center;
     border-radius: 112px;
     background: var(--primary-color);
-    color: #fff;
+    color: #fff !important;
     cursor: pointer;
 }
 .e-pill a, .e-pill a:hover, .e-pill a:active{
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
 }
 .e-pill.secondary{
@@ -338,6 +334,13 @@ button{
     border-bottom-left-radius: 0px !important;
     outline: none !important;
     box-shadow: none !important;
+}
+.divider{
+    width: calc(100% - 10px);
+    border-bottom: 2px solid var(--primary-color);
+}
+.divider.secondary{
+    border-bottom: 2px solid var(--secondary-color);
 }
 
 /*pull up*/
