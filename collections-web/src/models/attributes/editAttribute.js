@@ -1,11 +1,8 @@
 import React from 'react';
 import { Container, Button, Form, FormGroup, Label, Input, Row, Col, Card, CardBody, CardTitle } from 'reactstrap';
 import AttributeRoutes from '../../controllers/attributeRoutes';
-import Configs from '../../configs/configs';
 import DropDown from '../../components/inputs/dropDown';
-import InputText from '../../components/inputs/inputText';
 import ifNull from '../../utilities/helpers/ifNull';
-import originTracer from '../../utilities/api/originTracer';
 import EditSynonym from './editSynonym';
 import CreateValue from './createValue';
 
@@ -37,10 +34,7 @@ class EditAttribute extends React.Component {
             isDerived: false,
             dataType: "String",
             isDisplay: false,
-            canEdit: false
-        }
-
-        this.data = {
+            canEdit: false,
             attributeValues : [ { 
                 attributeSynonyms : [ {} ]
             } ]
@@ -162,19 +156,12 @@ class EditAttribute extends React.Component {
     }
 
     load(attributeId){
-        fetch(Configs.collectionApiUrl + '/attribute/' + attributeId + '/read?viewType=all&' + originTracer(), {
-            method: 'GET',
-            headers: {
-                'Authorization': 'private' 
-            }
-        })
-        .then(response => response.json())
-        .then(response => {
-            var metaData = response.metadata;
-            var status = metaData.status;
+        const attributeRoutes = new AttributeRoutes();
+        attributeRoutes.getAttributeForEdit(attributeId,()=>{
+            var response = attributeRoutes.returnParam;
+            var status = response.metadata.status;
 
             if(status==="success"){
-                this.data = response.payload;  
                 this.setState({
                     attributeId: attributeId,
                     attributeName: response.payload.attributeName,
@@ -196,7 +183,8 @@ class EditAttribute extends React.Component {
                     isOrdered: ifNull(response.payload.isOrdered),
                     isDerived: ifNull(response.payload.isDerived),
                     dataType: ifNull(response.payload.dataType),
-                    isDisplay: ifNull(response.payload.isDisplay)
+                    isDisplay: ifNull(response.payload.isDisplay),
+                    attributeValues: response.payload.attributeValues
                 })
             }
         });
@@ -258,19 +246,13 @@ class EditAttribute extends React.Component {
     }
 
     deleteAttributeValue(attributeValueId){
-        fetch(Configs.collectionApiUrl + '/attribute/value/' + attributeValueId + '/delete?' + originTracer(), {
-            method: 'DELETE',
-            headers: {
-                'Authorization': 'private' 
-            }
-        })
-        .then(response => response.json())
-        .then(response => {
-            var metaData = response.metadata;
-            var status = metaData.status;
+        const attributeRoutes = new AttributeRoutes();
+        attributeRoutes.deleteAttributeValue(attributeValueId,()=>{
+            var response = attributeRoutes.returnParam;
+            var status = response.metadata.status;
 
             if(status==="success"){
-                var valueArr = this.data.attributeValues;
+                var valueArr = this.state.attributeValues;
                 var didChange = false;
                 for(var i=0; i<valueArr.length; i++){
                     var valueObj = valueArr[i];
@@ -282,8 +264,9 @@ class EditAttribute extends React.Component {
                 }
 
                 if(didChange){
-                    this.data.attributeValues= valueArr;
-                    this.forceUpdate();
+                    this.setState({
+                        attributeValues: valueArr
+                    })
                 }
             }
         });
@@ -297,7 +280,7 @@ class EditAttribute extends React.Component {
                         <Col>
                             {this.state.attributeId===0 ?
                                  <h3>Create New Attribute</h3>
-                                :<h3>{this.data.attributeName} [AttributeId: {this.state.attributeId}]</h3>
+                                :<h3>{this.state.attributeName} [AttributeId: {this.state.attributeId}]</h3>
                             }
                         </Col>
                     </Row>
@@ -540,7 +523,7 @@ class EditAttribute extends React.Component {
                     </div>
                     <CreateValue isOpen={this.state.createValueModalOpen} close={this.createValueModalToggle} attributeId={this.state.attributeId} load={this.load} />
                 </div>
-                {this.data.attributeValues.map((m ,i) => (
+                {this.state.attributeValues.map((m ,i) => (
                 <Row key={i} noGutters className="list-row">
                     <Card style={{ width: '100%' }} className="no-border">
                         <CardBody>

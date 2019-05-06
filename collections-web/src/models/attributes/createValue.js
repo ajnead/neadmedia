@@ -1,8 +1,7 @@
 import React from 'react';
 import { Row, Col, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import AttributeRoutes from '../../controllers/attributeRoutes';
 import DropDown from '../../components/inputs/dropDown';
-import originTracer from '../../utilities/api/originTracer';
-import Configs from '../../configs/configs';
 
 class CreateValue extends React.Component {
 
@@ -60,24 +59,17 @@ class CreateValue extends React.Component {
             value: this.state.value
         }
 
-        fetch(Configs.collectionApiUrl + '/attribute/value/create?' + originTracer(), {
-            method: 'POST',
-            headers: {
-                'Authorization': 'private',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
-        .then(response => response.json())
-        .then(response => {
-            var metaData = response.metadata;
-            var status = metaData.status;
-
+        const attributeRoutes = new AttributeRoutes();
+        attributeRoutes.postAttributeValue(payload,()=>{
+            var response = attributeRoutes.returnParam;
+            var status = response.metadata.status;
+            
             if(status==="success"){
+                //var attributeValueId = response.payload.attributeValueId;
                 this.toggle();
                 this.props.load(this.state.attributeId);
             }
-        });
+        })
     }
 
     render(){

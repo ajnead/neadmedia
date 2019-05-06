@@ -70,12 +70,21 @@ class AttributeRoutes {
         put.execute();
     }
 
+    getAttributeForEdit(attributeId,callback){
+        const url = this._route  + attributeId + '/read?viewType=all&' + originTracer();
+        const get = new Get('attributeRoutes-getAttributeForEdit',url,()=>{
+            this.returnParam = get;
+            callback();
+        });
+        get.execute();
+    }
+
     /**
      * attribute history methods
      */
 
     getAttributeHistory(attributeId,callback){
-        const url = this._route + 'history/' + attributeId + '/read?' + originTracer();
+        const url = this._route + 'history/' + attributeId + '/read?viewType=all&' + originTracer();
         const get = new Get('attributeRoutes-getAttributeHistory',url,()=>{
             this.returnParam = get;
             callback();
@@ -123,8 +132,30 @@ class AttributeRoutes {
         post.execute();
     }
 
+     /**
+     * attribute value methods
+     */
+
+    postAttributeValue(json,callback){
+        const url = this._route + 'value/create?' + originTracer();
+        const post = new Post('attributeRoutes-postAttributeValue',url,json,()=>{
+            this._returnParam = post;
+            callback();
+        })
+        post.execute();
+    }
+
+    deleteAttributeValue(attributeValueId,callback){
+        const url = this._route + 'value/' + attributeValueId + '/delete?' + originTracer();
+        const del = new Delete('attributeRoutes-deleteAttributeValue',url,null,()=>{
+            this._returnParam = del;
+            callback();
+        })
+        del.execute();
+    }
+
     /**
-     * attribute version methods
+     * attribute synonym methods
      */
 
     postAttributeSynonym(json,callback){

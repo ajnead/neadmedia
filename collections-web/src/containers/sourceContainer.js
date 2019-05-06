@@ -6,6 +6,8 @@ import PipelineHistory from '../models/sources/pipelineHistory';
 import SourceData from '../models/sources/sourceData';
 import SourceHistory from '../models/sources/sourceHistory';
 import ViewPipeline from '../models/sources/viewPipeline';
+import OfferData from '../models/sources/offerData';
+import OfferHistory from '../models/sources/offerHistory';
 import getQueryParameter from '../utilities/url/getQueryParameter';
 
 class SourceContainer extends Component {
@@ -29,11 +31,16 @@ class SourceContainer extends Component {
                     name: 'Change Log',
                     to: '/data/sources/history',
                     component: SourceHistory
-                  },
+                },
                 {
                     name: 'Pipeline History',
                     to: '/data/sources/pipelineHistory',
                     component: PipelineHistory
+                },
+                {
+                    name: 'Offer Data',
+                    to: '/data/sources/offer',
+                    component: OfferData
                 },
             ],
             sourceInstanceSearch: ""

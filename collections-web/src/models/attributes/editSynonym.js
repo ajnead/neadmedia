@@ -56,7 +56,7 @@ class EditSynonym extends React.Component {
                     addSynonymValue: ""
                 })
             }
-        })
+        });
     }
 
     deleteSynonym(attributeSynonymId){

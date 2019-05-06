@@ -57,7 +57,7 @@ class PipelineHistory extends React.Component {
         const DetermineResponse = (props) => {
             switch(props.loadState) {
                 case 'waitingQuery':
-                    return <div>To start search a Source Instance ID</div>
+                    return <div>Search a Source Instance ID</div>
                 case 'waitingResults':
                     return <div>Loading...</div>
                 case 'success':

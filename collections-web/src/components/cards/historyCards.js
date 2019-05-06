@@ -14,7 +14,9 @@ const HistoryCards = (props) => {
                     <Col>
                         <Card>
                             <CardBody>
-                                <CardTitle>{props.idTitle}: {his[props.idName]}</CardTitle>
+                                <Row>
+                                    <Col><CardTitle>{props.idTitle}: {his[props.idName]}</CardTitle></Col>
+                                </Row>
                                 <Row>
                                     <Col><OptionDisplay name={"Value To"} value={his.valueTo} /></Col>
                                 </Row>
@@ -22,11 +24,14 @@ const HistoryCards = (props) => {
                                     <Col><OptionDisplay name={"Value From"} value={his.valueFrom} /></Col>
                                 </Row>
                                 <Row>
+                                    <Col><OptionDisplay name={"Field Name"} value={his.fieldName} /></Col>
+                                </Row>
+                                <Row>
                                     <Col><OptionDisplay name={"Restriction"} value={his.restriction} /></Col>
                                 </Row>
                                 <Row>
                                     <Col><OptionDisplay name={"Action"} value={his.action} /></Col>
-                                    <Col><OptionDisplay name={"Field Name"} value={his.fieldName} /></Col>
+                                    <Col><OptionDisplay className="float-right" name={"Updated By"} value={his.updatedBy} /></Col>
                                 </Row>
                                 <Row>
                                     <Col><OptionDisplay name={"Object ID"} value={his.objectGuid} /></Col>
