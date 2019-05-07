@@ -2,7 +2,8 @@ import React from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import InputText from '../components/inputs/inputText';
 import DropDown from '../components/inputs/dropDown';
-import CreateAccount from '../models/account/createAccount.modal';
+import CreateAccount from '../models/identity/createAccount.modal';
+import ViewIdentities from '../models/identity/viewIdentities';
 
 class AccountContainer extends React.Component {
 
@@ -101,6 +102,7 @@ class AccountContainer extends React.Component {
                         <Button className="bg-color-second no-border margin-top-33" block>Search</Button>
                     </Col>
                 </Row>
+                <ViewIdentities />
                 <CreateAccount 
                     isOpen={this.state.createAccountModalOpen} 
                     close={this.createAccountModalToggle} 

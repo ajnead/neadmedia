@@ -25,7 +25,8 @@ class SkuData extends React.Component {
                 skuSources: [],
                 skuAttributes: [],
                 skuImages: [],
-                attributeNames: null
+                attributeNames: null,
+                skuOffers: []
             },
             openPullUp: false,
             loadState: "waitingQuery",
@@ -188,7 +189,12 @@ class SkuData extends React.Component {
                             <SkuImages />
                         </Col>
                     </Row>
-                    <SkuRelationships />
+                    <Row className="margin-top-10">
+                        <Col>
+                            <h3 className="margin-top-0">Relationships</h3>
+                            <SkuRelationships />
+                        </Col>
+                    </Row>
                     <Row className="margin-top-10">
                         <Col>
                             <h3 className="margin-top-0">Sources</h3>
@@ -208,6 +214,12 @@ class SkuData extends React.Component {
                                     ))}
                                 </CardBody>
                             </Card>
+                        </Col>
+                    </Row>
+                    <Row className="margin-top-10">
+                        <Col>
+                            <h3 className="margin-top-0">Offers</h3>
+                            <SkuOffers />
                         </Col>
                     </Row>
                     <div className="margin-top-10">
@@ -275,43 +287,80 @@ class SkuData extends React.Component {
             )
         }
 
-        var SkuRelationships = () => {
-            if(this.state.relationshipsDataAvailable){
+        var SkuOffers = () => {
+            if(this.state.sku.skuOffers!==null&&this.state.sku.skuOffers.length>0){
                 return(
-                    <Row className="margin-top-10">
-                        <Col>
-                            <h3 className="margin-top-0">Relationships</h3>
-                            <Card>
-                                <CardBody>
-                                    <Row className = "margin-bottom-0">
-                                        <Col>
-                                            <OptionDisplayList 
-                                                name={"Parent Instance IDs"} 
-                                                values={this.state.relationships.relationshipInstanceIds} 
-                                                isLink={true} 
-                                                href={"/data/relationships/parents?parentInstanceId="}/>
-                                        </Col>
-                                    </Row>
-                                    {this.state.relationships.collectionSummaries.map((cs,i) => (
-                                        <Row key={i}>
-                                            <Col xs="4">
-                                                <OptionDisplay 
-                                                    name={"Collection Instance ID"} 
-                                                    value={cs.collectionInstanceId} 
-                                                    isLink={true} 
-                                                    href={'/data/relationships/collections?collectionInstanceId=' + cs.collectionInstanceId}/>
-                                            </Col>
-                                            <Col><OptionDisplay name={"Collection Name"} value={cs.collectionName} /></Col>
-                                        </Row>
-                                    ))}
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>
+                    <Card>
+                        <CardBody>
+                            {this.state.sku.skuOffers.map((offer,i) => (
+                                <Row key={i}>
+                                    <Col xs="4">
+                                        <OptionDisplay 
+                                            name={"Offer Instance ID"} 
+                                            value={offer.offerInstanceId} 
+                                            isLink={true} 
+                                            href={'/data/sources/offer?offerInstanceId=' + offer.offerInstanceId}/>
+                                    </Col>
+                                    <Col xs="4">
+                                        <OptionDisplay 
+                                            name={"Source Instance ID"} 
+                                            value={offer.sourceInstanceId} 
+                                            isLink={true} 
+                                            href={'/data/sources/offer?sourceInstanceId=' + offer.sourceInstanceId}/>
+                                    </Col>
+                                    <Col><OptionDisplay name={"Added On"} value={<Moment unix tx="America/New_York">{offer.createDate / 1000}</Moment>} /></Col>
+                                </Row>
+                            ))}
+                        </CardBody>
+                    </Card>
                 )
             }else{
                 return(
-                    <span></span>
+                    <Card>
+                        <CardBody>
+                            <span>No offers available</span>
+                        </CardBody>
+                    </Card>
+                )
+            }
+        }
+
+        var SkuRelationships = () => {
+            if(this.state.relationshipsDataAvailable){
+                return(
+                    <Card>
+                        <CardBody>
+                            <Row className = "margin-bottom-0">
+                                <Col>
+                                    <OptionDisplayList 
+                                        name={"Parent Instance IDs"} 
+                                        values={this.state.relationships.relationshipInstanceIds} 
+                                        isLink={true} 
+                                        href={"/data/relationships/parents?parentInstanceId="}/>
+                                </Col>
+                            </Row>
+                            {this.state.relationships.collectionSummaries.map((cs,i) => (
+                                <Row key={i}>
+                                    <Col xs="4">
+                                        <OptionDisplay 
+                                            name={"Collection Instance ID"} 
+                                            value={cs.collectionInstanceId} 
+                                            isLink={true} 
+                                            href={'/data/relationships/collections?collectionInstanceId=' + cs.collectionInstanceId}/>
+                                    </Col>
+                                    <Col><OptionDisplay name={"Collection Name"} value={cs.collectionName} /></Col>
+                                </Row>
+                            ))}
+                        </CardBody>
+                    </Card>
+                )
+            }else{
+                return(
+                    <Card>
+                        <CardBody>
+                            <span>No relationships available</span>
+                        </CardBody>
+                    </Card>
                 )
             }
         }

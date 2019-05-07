@@ -142,7 +142,7 @@ class OfferData extends React.Component {
 
         return(
             <Container fluid>
-                <Row>
+                <Row nogutters>
                     <Col xs="6">
                         <InputSourceInstanceId returnValue={this.returnValue} />
                     </Col>
