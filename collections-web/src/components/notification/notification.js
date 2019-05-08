@@ -24,7 +24,7 @@ class Notification extends React.Component {
     }
 
     updateState(msg, data){  
-        if(data.showMessageModal||data.metadata.status!=="success"){
+        if(data.showMessageModal||(data.metadata.status!=="success"&&data.metadata.status!=="not_found")){
             this.setState({
                 traceId: data.metadata.traceId,
                 status: data.metadata.status,
